@@ -1,0 +1,206 @@
+// ---------------------------
+// mixins
+// ---------------------------
+// @mixin fontBase() {
+//     font-family: 'Inter', sans-serif;
+// }
+
+@mixin border-radius($value) {
+    border-radius: $value;
+}
+
+@mixin box-shadow($value) {
+    box-shadow: $value;
+}
+
+@mixin translate($x, $y) {
+    transform: translate($x, $y);
+}
+
+@mixin font500() {
+    font-weight: 500;
+}
+
+@mixin placeholder($color) {
+    &::-webkit-input-placeholder {
+        // WebKit browsers
+        color: #{$color};
+    }
+    &:-moz-placeholder {
+        // Mozilla Firefox 4 to 18
+        color: #{$color};
+        opacity: 1;
+    }
+    &::-moz-placeholder {
+        // Mozilla Firefox 19+
+        color: #{$color};
+        opacity: 1;
+    }
+    &:-ms-input-placeholder {
+        // Internet Explorer 10+
+        color: #{$color};
+    }
+}
+
+@mixin transform($value) {
+    -webkit-transform: $value;
+    -moz-transform: $value;
+    -o-transform: $value;
+    transform: $value;
+}
+
+@mixin transition($transition...) {
+    transition: $transition;
+}
+
+@mixin transition-value($value: all ease 0.3s) {
+    -webkit-transition: $value;
+    -moz-transition: $value;
+    -o-transition: $value;
+    transition: $value;
+}
+
+// $icons: sprite-map("sprites/*.png", $layout: vertical, $spacing: 5px) !default;
+// Sprite mixin, works perfectly with standard defines
+// @mixin use-sprite($sprite, $sprite-retina: false, $sprite-map: $icons) {
+//   background-image: sprite-url($sprite-map);
+//   background-position: sprite-position($sprite-map, $sprite);
+//   background-repeat: no-repeat;
+//   overflow: hidden;
+//   height: image-height(sprite-file($sprite-map, $sprite));
+//   width: image-width(sprite-file($sprite-map, $sprite));
+//   display: inline-block;
+// }
+// Clearfix
+@mixin clearfix() {
+    &:before,
+    &:after {
+        content: " "; // 1
+        display: table; // 2
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+// Sizing shortcuts
+@mixin size($width, $height) {
+    width: $width;
+    height: $height;
+}
+// Text overflow
+// Requires inline-block or block for proper styling
+@mixin text-overflow() {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+@mixin square($size) {
+    @include size($size, $size);
+}
+
+@mixin breakpoint($bp) {
+    @if $bp==xxl {
+        @media only screen and (min-width: $screen-xxl) {
+            @content ;
+        }
+    }
+    @else if $bp==xl {
+        @media only screen and (min-width: $screen-xl) {
+            @content ;
+        }
+    }
+    @else if $bp==lg {
+        @media only screen and (min-width: $screen-lg) {
+            @content ;
+        }
+    }
+    @else if $bp==md {
+        @media only screen and (min-width: $screen-md) {
+            @content ;
+        }
+    }
+    @else if $bp==sm {
+        @media only screen and (min-width: $screen-sm) {
+            @content ;
+        }
+    }
+    @else if $bp==xs {
+        @media only screen and (max-width: $screen-xs) {
+            @content ;
+        }
+    }
+}
+
+@mixin breakpointMax($bp) {
+    @if $bp==xxl {
+        @media only screen and (max-width: ($screen-xxl - 1)) {
+            @content ;
+        }
+    }
+    @else if $bp==xl {
+        @media only screen and (max-width: ($screen-xl - 1)) {
+            @content ;
+        }
+    }
+    @else if $bp==lg {
+        @media only screen and (max-width: ($screen-lg - 1)) {
+            @content ;
+        }
+    }
+    @else if $bp==md {
+        @media only screen and (max-width: ($screen-md - 1)) {
+            @content ;
+        }
+    }
+    @else if $bp==sm {
+        @media only screen and (max-width: ($screen-sm - 1)) {
+            @content ;
+        }
+    }
+    @else if $bp==xs {
+        @media only screen and (max-width: ($screen-xs - 1)) {
+            @content ;
+        }
+    }
+}
+
+@mixin scale($ratio...) {
+    transform: scale($ratio);
+}
+
+@mixin flexWidth($value) {
+    -ms-flex: 0 0 $value;
+    flex: 0 0 $value;
+    max-width: $value;
+    width: $value;
+}
+
+@mixin flexWrap() {
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+@mixin dFlex() {
+    display: -ms-flexbox;
+    display: flex;
+}
+
+@mixin justifyContent($value) {
+    -ms-flex-pack: $value;
+    justify-content: $value;
+}
+
+@mixin alignItems($value) {
+    -ms-flex-align: $value;
+    align-items: $value;
+}
+
+@mixin translateY() {
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+

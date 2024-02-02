@@ -1,0 +1,71 @@
+.slick-arrow {
+    @include square(40px);
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 9999;
+    opacity: .8;
+    margin-top: -20px;
+    // display: none!important;
+    &::before {
+        content: "";
+    }
+    &:hover,
+    &:focus,
+    &:active {
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+}
+/* Arrows */
+.slick-prev,
+.slick-next
+{
+    font-size: 0;
+    line-height: 0;
+    position: absolute;
+    top: 50%;
+    display: block;
+    padding: 0;
+    cursor: pointer;
+    color: transparent;
+    border: none;
+    outline: none;
+    background: transparent;
+    &:hover,&:focus{
+        color: transparent;
+        outline: none;
+        background: transparent;
+    }
+}
+.slick-prev {
+    background-image: url(../img/icons/arrow_prev.svg);
+    left: -10px;
+    &:hover,
+    &:focus,
+    &:active {
+        background-image: url(../img/icons/arrow_prev.svg);
+    }
+}
+
+.slick-next {
+    background-image: url(../img/icons/arrow_next.svg);
+    right: -10px;
+    &:hover,
+    &:focus,
+    &:active {
+        background-image: url(../img/icons/arrow_next.svg);
+    }
+}
+.slider-nav{
+    .slick-list{
+        margin: 0 25px;
+    }
+    .item-slider{
+        padding: 0.6em;
+    }
+}
+.slider-for{
+    .item-slider{
+        padding: 0.6em;
+    }
+}

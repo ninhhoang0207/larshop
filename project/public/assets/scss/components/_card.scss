@@ -1,0 +1,30 @@
+// // ---------------------------
+// // Card 
+// // ---------------------------
+.block-product-card{
+    margin-bottom: 2.992em;
+}
+.block-product-link{
+    text-decoration: none;
+    img {
+        width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 0 1em;
+        box-shadow: none;
+    }
+    h2{
+        padding: 0.5em 0;
+        margin: 0;
+        font-size: 1em;
+        &.clr-black{
+            &:hover,&:active,&:focus{
+                color: #0056b3;
+            }
+        }
+    }
+    .price {
+        color: #2f3136;
+        font-size: 1em;
+    }
+}

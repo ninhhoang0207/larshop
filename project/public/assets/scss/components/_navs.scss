@@ -1,0 +1,45 @@
+// ---------------------------
+// Navigation
+// ---------------------------
+.page-pagination-numbers {
+    margin: 1px;
+    list-style: none;
+    flex-wrap: wrap;
+    li {
+        margin-top: 8px;
+        span,
+        a {
+            border: 1px solid #eee;
+            color: #000;
+            margin: 0 5px;
+            background: #fff;
+            padding: 10px 15px;
+            line-height: 1;
+            font-size: 1em;
+            font-weight: 400;
+            text-decoration: none;
+            min-width: 1em;
+            display: block;
+
+            &:hover,
+            &:focus,
+            &:active {
+                border: 1px solid #eee;
+                color: #000;
+                background: #fff;
+            }
+
+            &.current {
+                opacity: .8;
+                background: #000;
+                color: #fff;
+            }
+        }
+    }
+}
+//home quantity
+.title-quantity{
+    font-size: .85em;
+    font-weight: 700;
+    margin: 0 2px;
+}

@@ -1,0 +1,165 @@
+// ---------------------------
+// cart
+// ---------------------------
+#cart-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    max-width: 480px;
+    background: #FFF;
+    padding: 16px;
+    min-height: 100vh;
+    overflow-y: auto;
+    z-index: 999999;
+    display: none;
+    @include breakpoint(md){
+        padding: 30px;
+    }
+    .item-qty {
+        margin: 15px 0 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+.cart-height-content{
+    @include customScrollH();
+    max-height: 50vh;
+    overflow-y: auto;
+    padding: 15px;
+    margin: 0 -15px;
+}
+.cart-sidebar-header {
+    border-bottom: 1px solid #eee !important;
+    padding-bottom: 20px;
+    position: relative;
+    button.close {
+        -webkit-appearance: none;
+        background-color: rgba(10, 10, 10, .2);
+        border: 0;
+        border-radius: 50%;
+        cursor: pointer;
+        pointer-events: auto;
+        display: inline-block;
+        flex-grow: 0;
+        flex-shrink: 0;
+        font-size: 0;
+        height: 40px;
+        width: 40px;
+        max-height: 40px;
+        max-width: 40px;
+        min-height: 40px;
+        min-width: 40px;
+        outline: 0;
+        vertical-align: top;
+        position: absolute;
+        top: -5px;
+        right: 0;
+        padding: 0 !important;
+        &:before {
+            background-color: #fff;
+            content: "";
+            display: block;
+            left: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translateX(-50%) translateY(-50%) rotate(45deg);
+            transform-origin: center center;
+            height: 2px;
+            width: 50%;
+        }
+        &:after {
+            background-color: #fff;
+            content: "";
+            display: block;
+            left: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translateX(-50%) translateY(-50%) rotate(45deg);
+            transform-origin: center center;
+            height: 50%;
+            width: 2px;
+        }
+    }
+}
+.cart-sidebar-content{
+    padding: 30px 0 0;
+    hr {
+        -webkit-box-sizing: content-box;
+        box-sizing: content-box;
+        background-color: #ccc;
+        height: 1px;
+        margin-bottom: 1.5em;
+    }
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        margin: 0 0 1.5em;
+        width: 100%;
+        tr {
+            border-color: rgba(0, 0, 0, .04);
+            td{
+                &:nth-child(1){
+                    vertical-align: top;
+                }
+                &:nth-child(2){
+                    width: 100px;
+                    padding: 10px 0;
+                }
+                &:nth-child(3){
+                    padding: 5px 0 5px 10px;
+                }
+            }
+            button.close {
+                -webkit-appearance: none;
+                background-color: rgba(255, 0, 0, 0.2);
+                border: 0;
+                border-radius: 50%;
+                cursor: pointer;
+                pointer-events: auto;
+                display: inline-block;
+                flex-grow: 0;
+                flex-shrink: 0;
+                font-size: 0;
+                height: 20px;
+                width: 20px;
+                max-height: 20px;
+                max-width: 20px;
+                min-height: 20px;
+                min-width: 20px;
+                outline: 0;
+                vertical-align: top;
+                position: relative;
+                top: 10px;
+                right: 5px;
+                padding: 0 !important;
+                &:before {
+                    background-color: #fff;
+                    content: "";
+                    display: block;
+                    left: 50%;
+                    position: absolute;
+                    top: 50%;
+                    transform: translateX(-50%) translateY(-50%) rotate(45deg);
+                    transform-origin: center center;
+                    height: 2px;
+                    width: 50%;
+                }
+               &:after {
+                    background-color: #fff;
+                    content: "";
+                    display: block;
+                    left: 50%;
+                    position: absolute;
+                    top: 50%;
+                    transform: translateX(-50%) translateY(-50%) rotate(45deg);
+                    transform-origin: center center;
+                    height: 50%;
+                    width: 2px;
+                }
+            }
+        }
+    }
+}
+

@@ -1,0 +1,171 @@
+// ---------------------------
+// Button
+// ---------------------------
+
+.btn {
+    border-radius: 3px;
+    border: 0;
+    font-weight: normal;
+
+    &:hover,
+    &:focus,
+    &:active {
+        border: none;
+        outline: none;
+    }
+}
+
+.btn-single-cart {
+    text-decoration: none;
+    vertical-align: middle;
+    padding-bottom: 11px;
+    padding-top: 11px;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 10px 0;
+    height: 50px;
+    img {
+        max-width: 25px;
+        height: auto;
+        margin-right: 5px;
+    }
+    @include breakpoint(sm){
+        width: calc(40% - 10px);
+        margin: 0 5px;
+    }
+}
+
+.btn-add-cart {
+    background: #000;
+    color: #fff;
+    font-weight: normal;
+
+    &:hover,
+    &:active,
+    &:focus {
+        background: #000;
+        color: #fff;
+        opacity: 0.85;
+    }
+}
+
+.btn-buy-now {
+    background: #ff4343;
+    color: #FFF;
+
+    &:hover,
+    &:active,
+    &:focus {
+        background: #ff4343;
+        color: #FFF;
+        opacity: 0.85;
+    }
+}
+
+.btn-checkout-button {
+    display: block;
+    padding: 15px;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 1.2em;
+    color: #FFF;
+    background: #000;
+    text-decoration: none;
+
+    &:hover,
+    &:active,
+    &:focus {
+        background: #000;
+        color: #FFF;
+        opacity: 0.85;
+    }
+}
+
+.button-click {
+    button {
+        border: none;
+        background: transparent;
+
+        &:hover,
+        &:focus,
+        &:active {
+            border: none;
+            outline: none;
+        }
+    }
+}
+
+.btn-pay-card {
+    height: 55px;
+    vertical-align: top;
+    min-height: 40px;
+    font-size: 20px;
+    background: #2C2E2F;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    border-radius: 4px;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background: #2C2E2F;
+        color: #fff;
+    }
+}
+
+.btn-otp {
+    height: 55px;
+    vertical-align: top;
+    min-height: 40px;
+    font-size: 20px;
+    background: #ffc439;
+    color: #2C2E2F;
+    min-width: 250px;
+    text-align: center;
+    border-radius: 4px;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background: #ffc439;
+        color: #2C2E2F;
+    }
+}
+.btn-pay-pal{
+    background: #ffc439;
+    color: #2C2E2F;
+    width: 100%;
+    &:hover,
+    &:focus,
+    &:active {
+        background: #ffc439;
+        color: #2C2E2F;
+    }
+}
+
+.btn-update-cart {
+    background: #000;
+    border-radius: 3px;
+    color: #fff;
+    padding: 0.618em 1em;
+
+    &:disabled[disabled] {
+        cursor: not-allowed;
+        color: #fff;
+        background: #000;
+        opacity: .5;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        opacity: .5;
+        color: #fff;
+        background: #000;
+    }
+}
