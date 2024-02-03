@@ -10,6 +10,7 @@ use App\Shop\ProductAttributes\Repositories\ProductAttributeRepositoryInterface;
 use App\Shop\Products\Repositories\Interfaces\ProductRepositoryInterface;
 use App\Shop\Products\Transformations\ProductTransformable;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
@@ -73,6 +74,20 @@ class CartController extends Controller
         ]);
     }
 
+    public function list()
+    {
+        $courier = $this->courierRepo->findCourierById(request()->session()->get('courierId', 1));
+        $shippingFee = $this->cartRepo->getShippingFee($courier);
+
+        return view('client.my_cart', [
+            'cartItems' => $this->cartRepo->getCartItemsTransformed(),
+            'subtotal' => $this->cartRepo->getSubTotal(),
+            'tax' => $this->cartRepo->getTax(),
+            'shippingFee' => $shippingFee,
+            'total' => $this->cartRepo->getTotal(2, $shippingFee)
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -125,6 +140,17 @@ class CartController extends Controller
 
         request()->session()->flash('message', 'Update cart successful');
         return redirect()->route('cart.index');
+    }
+
+    public function batchUpdate(Request $request) {
+        $cartItems = $request->cart_items;
+        foreach ($cartItems as $cartItem) {
+            [$id, $quantity] = explode(',', $cartItem);
+            $this->cartRepo->updateQuantityInCart($id, $quantity);
+        }
+
+        request()->session()->flash('message', 'Update cart successful');
+        return redirect()->route('cart.list');
     }
 
     /**

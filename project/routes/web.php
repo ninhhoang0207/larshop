@@ -105,6 +105,8 @@ Route::namespace('Front')->group(function () {
     Route::get('return-policy', 'HomeController@returnPolicyPage')->name('returnPolicy');
 
     Route::resource('cart', 'CartController');
+    Route::get('my-cart', 'CartController@list')->name('cart.list');
+    Route::post('my-cart', 'CartController@batchUpdate')->name('cart.update');
     Route::get("category/{slug}", 'CategoryController@getCategory')->name('front.category.slug');
     Route::get("search", 'ProductController@search')->name('search.product');
     Route::get("/old/{product}", 'ProductController@showOld')->name('front.get.product');

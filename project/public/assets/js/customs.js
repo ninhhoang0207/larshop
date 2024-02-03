@@ -100,22 +100,40 @@ jQuery(document).ready(function ($) {
   (function quantityProducts() {
     var $quantityArrowMinus = $(".quantity-arrow-minus");
     var $quantityArrowPlus = $(".quantity-arrow-plus");
-    var $quantityNum = $(".input-number");
+    var $quantityInput = $(".input-number");
 
     $quantityArrowMinus.click(quantityMinus);
     $quantityArrowPlus.click(quantityPlus);
+    $quantityInput.keyup(quantityUpdate);
 
     function quantityMinus() {
-      if ($quantityNum.val() > 1) {
-        $quantityNum.val(+$quantityNum.val() - 1);
+      $(".btn-update-cart").prop('disabled', false)
+
+      const cartItemId = $(this).data('id')
+      const quantityEl = $(`#quantity-${cartItemId}`)
+
+      if (quantityEl.val() > 1) {
+        quantityEl.val(+quantityEl.val() - 1)
+        $(`#cart-item-${cartItemId}`).val(`${cartItemId},${quantityEl.val()}`)
       }
     }
 
     function quantityPlus() {
-      $quantityNum.val(+$quantityNum.val() + 1);
+      $(".btn-update-cart").prop('disabled', false)
+
+      const cartItemId = $(this).data('id')
+      const quantityEl = $(`#quantity-${cartItemId}`)
+      quantityEl.val(+quantityEl.val() + 1)
+      $(`#cart-item-${cartItemId}`).val(`${cartItemId},${quantityEl.val()}`)
+    }
+
+    function quantityUpdate() {
+      $(".btn-update-cart").prop('disabled', false)
+      const cartItemId = $(this).data('id')
+      const quantity = $(this).val()
+      $(`#cart-item-${cartItemId}`).val(`${cartItemId},${quantity}`)
     }
   })();
-
 });
 
 
