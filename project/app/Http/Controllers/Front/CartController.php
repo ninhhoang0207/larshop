@@ -164,6 +164,6 @@ class CartController extends Controller
         $this->cartRepo->removeToCart($id);
 
         request()->session()->flash('message', 'Removed to cart successful');
-        return redirect()->route('cart.index');
+        return redirect()->route('cart.list');
     }
 }

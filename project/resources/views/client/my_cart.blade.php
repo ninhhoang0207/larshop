@@ -23,7 +23,7 @@
                 @foreach ($cartItems as $cartItem)
                 <tr class="cart-form__cart-item cart_item">
                   <td class="product-remove">
-                    <a href="#" class="remove">×</a>
+                    <a href="#" class="cart-item-remove remove" data-url-submit="{{ route('cart.destroy', $cartItem->rowId) }}">×</a>
                   </td>
                   <td class="product-thumbnail">
                     <a href="#"><img src="{{ $cartItem->cover ?? asset('images/NoData.png') }}" class="img-thumbnail" alt="" decoding="async" loading="lazy"></a>
@@ -42,7 +42,7 @@
                           <button class="quantity-arrow-minus" data-id="{{ $cartItem->rowId }}" type="button"><img src="assets/img/icons/icon-minus.svg" width="14" alt="-"></button>
                         </div>
                         <input type="number" class="input-number cart-qty-input" id="quantity-{{ $cartItem->rowId }}" data-id="{{ $cartItem->rowId }}" name="quantity" min="1" max="100" value="{{ $cartItem->qty }}" />
-                        <input type="hidden" id="cart-item-{{ $cartItem->rowId }}"  name="cart_items[]" value="{{ $cartItem->rowId . ',' . $cartItem->qty}}">
+                        <input type="hidden" id="cart-item-{{ $cartItem->rowId }}" name="cart_items[]" value="{{ $cartItem->rowId . ',' . $cartItem->qty}}">
                         <div class="button-click p-2">
                           <button type="button" data-id="{{ $cartItem->rowId }}" class="quantity-arrow-plus">
                             <img src="assets/img/icons/icon-add.svg" width="14"></button>
@@ -113,4 +113,46 @@
     </div>
   </div>
 </section>
+@endsection
+
+@section("js")
+<script>
+  jQuery(document).ready(function($) {
+    $('.cart-item-remove').on('click', function(e) {
+      e.preventDefault()
+      if (confirm('Are you sure?')) {
+        const url = $(this).data('url-submit')
+        var formElement = $('<form>', {
+          id: url,
+          action: url,
+          method: 'post'
+        });
+
+        // Create an input element
+        var csrfTokenInput = $('<input>', {
+          name: '_token',
+          value: '{{ csrf_token() }}',
+        });
+
+        var methodInput = $('<input>', {
+          name: '_method',
+          value: 'delete',
+        });
+
+        // Create a submit button
+        var submitButton = $('<input>', {
+          type: 'submit',
+        });
+
+        // Append the input and submit button to the form
+        formElement.append(csrfTokenInput, methodInput, submitButton);
+
+        // Append the form to the container in the DOM
+        $('body').append(formElement);
+        submitButton.click()
+      }
+    })
+
+  })
+</script>
 @endsection
