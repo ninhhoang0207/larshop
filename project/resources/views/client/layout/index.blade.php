@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="/assets/css/font-awesome.css">
   <!-- endbuild-->
   <link rel="stylesheet" href="/assets/css/template.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
   <!-- endbuild-->
   @yield('css')
 </head>
@@ -39,14 +40,6 @@
 
     <!-- main content -->
     <main class="main-content">
-      <div class="row">
-        <div class="col-md-12 content">
-          <div class="box-body">
-            @include('layouts.errors-and-messages')
-          </div>
-          <h3><i class="fa fa-cart-plus"></i> Shopping Cart</h3>
-        </div>
-      </div>
       @yield('content')
     </main>
     <!-- e: main content -->
@@ -60,7 +53,20 @@
   <script src="/assets/js/bootstrap.min.js"></script>
   <script src="/assets/js/slick.min.js"></script>
   <script src="/assets/js/customs.js"></script>
-
+  <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <script>
+    jQuery(document).ready(function ($) {
+      @if($errors->all())
+        @foreach($errors->all() as $message)
+          toastr.error("{{ session()->get('error') }}", 'Error!',)
+        @endforeach
+      @elseif(session()->has('message'))
+        toastr.success("{{ session()->get('message') }}", 'Successful!')
+      @elseif(session()->has('error'))
+        toastr.error("{{ session()->get('error') }}", 'Error!')
+      @endif
+    })
+  </script>
   @yield('js')
 </body>
 
