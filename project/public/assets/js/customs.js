@@ -1,12 +1,25 @@
 jQuery(document).ready(function ($) {
   // menu
-  $('.sidebar-nav-icon').on('click', function () {
-    $('#sidebar-menu').toggleClass('show');
-    $('#mobile-menu-overlay').toggleClass('show');
+  // $('.sidebar-nav-icon').on('click', function () {
+  //   $('#sidebar-menu').toggleClass('show');
+  //   $('#mobile-menu-overlay').toggleClass('show');
+  // });
+  // $('#sidebar-menu .close-menu').on('click', function () {
+  //   $('#sidebar-menu').removeClass('show');
+  //   $('#mobile-menu-overlay').removeClass('show');
+  // });
+  $('a#pull').click(function () {
+    $('#mobile-menu-overlay').fadeIn();
+    $('#sidebar-menu').animate({
+      left: 0
+    }, 400);
   });
-  $('#sidebar-menu .close-menu').on('click', function () {
-    $('#sidebar-menu').removeClass('show');
-    $('#mobile-menu-overlay').removeClass('show');
+
+  $('#sidebar-menu .close-menu').click(function () {
+    $('#mobile-menu-overlay').fadeOut();
+    $('#sidebar-menu').animate({
+      left: '-100%'
+    }, 400);
   });
   $('.check-variable-item').on('click', function () {
     $(this).toggleClass('selected');

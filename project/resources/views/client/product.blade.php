@@ -2,7 +2,7 @@
 
 @section('content')
 <!-- section block-product-->
-<section class="block-product block-card">
+<section class="block-product block-card pb-5">
   <div class="container">
     <div class="row">
       <div class="col-lg-6">
@@ -75,7 +75,7 @@
             </ul>
             @endif
             <!-- //add-cart -->
-            <div class="d-lg-flex d-xl-flex d-block d-xs-block d-sm-flex align-items-center mt-4">
+            <div class="d-lg-flex d-xl-flex d-block d-xs-block d-sm-flex align-items-center mt-4 w-100">
               <div class="block-quantity">
                 <label for="quantity"></label>
                 <div class="button-click p-2">
@@ -126,7 +126,7 @@
 <!-- end -->
 <!-- section block-product-->
 <section class="section-content-description bg-white">
-  <div class="container pt-lg-5 pb-lg-5">
+  <div class="container py-4 py-lg-5">
     <div class="row mb-5">
       <div class="col-12 col-lg-3 mb-3 col-sm-4">
         <h2 class="m-0 fz-25 font-weight-bold">Description</h2>

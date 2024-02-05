@@ -21,7 +21,7 @@
     </div>
 
     <!-- //pagination -->
-    <nav class="pagination text-center">
+    <div class="pagination text-center">
       {{ $products->links() }}
       <!-- <ul class="page-pagination-numbers d-flex align-items-center justify-content-center w-100 ">
         <li><span aria-current="page" class="page-numbers current">1</span></li>
@@ -34,7 +34,7 @@
         <li><a class="page-numbers" href="https://keennol.com/collections/page/109/">109</a></li>
         <li><a class="next page-numbers" href="https://keennol.com/collections/page/2/">→</a></li>
       </ul> -->
-    </nav>
+</div>
   </div>
 </section>
 @endsection

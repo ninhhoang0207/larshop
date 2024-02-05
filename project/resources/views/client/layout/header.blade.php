@@ -4,7 +4,7 @@
       <div class="container">
         <div class="header-content-container">
           <div class="sidebar-nav-icon">
-            <a href="/" id="pull" class="toggle-mobile-menu menu-toggle" aria-controls="secondary-menu" aria-expanded="false">
+            <a href="javascript:void(0)" id="pull" class="toggle-mobile-menu menu-toggle" aria-controls="secondary-menu" aria-expanded="false">
               <img src="assets/img/icons/menu.svg">
             </a>
           </div>
@@ -22,7 +22,7 @@
 </header>
 <!-- e: header -->
 <div id="sidebar-menu">
-  <a href="#" class="close-menu">
+  <a href="javascript:void(0)" class="close-menu">
     <figure><img src="assets/img/icons/icon-close.svg" alt=""></figure>
 
   </a>
