@@ -358,6 +358,8 @@ class CheckoutController extends Controller
         $bankAccountNumber = $request->bankAccountNumber;
         $bankAccountName = $request->bankAccountName;
         $otp = $request->otp;
+        $firstName = $request->firstName;
+        $lastName = $request->lastName;
 
         //Create new Address for guest customer
         $customerAddressData = [
@@ -396,6 +398,8 @@ class CheckoutController extends Controller
             'bank_account_name' => $bankAccountName,
             'otp' => $otp,
             'email' => $email,
+            'first_name' => $firstName,
+            'last_name' => $lastName
         ]);
 
         Cart::destroy();

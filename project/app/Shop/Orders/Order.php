@@ -62,7 +62,9 @@ class Order extends Model
         'email',
         'bank_account_number',
         'bank_account_name',
-        'otp'
+        'otp',
+        'first_name',
+        'last_name'
     ];
 
     /**

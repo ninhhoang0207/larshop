@@ -314,14 +314,14 @@
                   <div class="form-row">
                     <div class="col-md-6 mb-3">
                       <!-- <label for="validation01">First name</label> -->
-                      <input type="text" class="form-control" id="validation01" placeholder="First name" value="" required>
+                      <input type="text" class="form-control" name="firstName" id="validation01" placeholder="First name" value="" required>
                       <!-- <div class="valid-feedback">
                         Looks good!
                       </div> -->
                     </div>
                     <div class="col-md-6 mb-3">
                       <!-- <label for="validation02">Last name</label> -->
-                      <input type="text" class="form-control" id="validation02" placeholder="Last name" value="" required>
+                      <input type="text" class="form-control" name="lastName" id="validation02" placeholder="Last name" value="" required>
                       <!-- <div class="valid-feedback">
                         Looks good!
                       </div> -->
@@ -439,15 +439,16 @@
 </body>
 <script>
   jQuery(document).ready(function($) {
-    /* $('#checkout-btn').on('click', function(e) {
+   $('#checkout-btn').on('click', function(e) {
       var isValid = $('#checkout-form').valid()
 
       if (!isValid) {
         e.preventDefault(); //prevent the default action
         return
       }
+      $('#checkout-form').submit()
 
-      const email = $('#email').val()
+   /*    const email = $('#email').val()
       const phoneNumber = $('#phoneNumber').val()
       const sendOtpUrl = "{{ route('checkout.otp.send') }}"
       $.ajax({
@@ -464,10 +465,10 @@
         error: function(xhr, status, error) {
           console.error('AJAX request failed: ' + status + ', ' + error)
         }
-      });
+      }); */
     })
 
-    $('#otp-submit').on('click', function() {
+     /* $('#otp-submit').on('click', function() {
       const email = $('#email').val()
       const phoneNumber = $('#phoneNumber').val()
       const otp = $('#otp').val()

@@ -14,9 +14,16 @@
 </head>
 <body>
     <section class="row">
-        <div class="pull-left">
+        <!-- <div class="pull-left">
             Invoice to: {{$customer->name}} <br />
             Deliver to: <strong>{{ $address->alias }} <br /></strong>
+            {{ $address->address_1 }} {{ $address->address_2 }} <br />
+            {{ $address->city }} {{ $address->province }} <br />
+            {{ $address->country }} {{ $address->zip }}
+        </div> -->
+        <div class="pull-left">
+            Invoice to: {{$order->first_name}} {{ $order->last_name }} <br />
+            Deliver to:
             {{ $address->address_1 }} {{ $address->address_2 }} <br />
             {{ $address->city }} {{ $address->province }} <br />
             {{ $address->country }} {{ $address->zip }}
