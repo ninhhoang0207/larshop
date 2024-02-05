@@ -39,6 +39,14 @@
 
     <!-- main content -->
     <main class="main-content">
+      <div class="row">
+        <div class="col-md-12 content">
+          <div class="box-body">
+            @include('layouts.errors-and-messages')
+          </div>
+          <h3><i class="fa fa-cart-plus"></i> Shopping Cart</h3>
+        </div>
+      </div>
       @yield('content')
     </main>
     <!-- e: main content -->

@@ -36,6 +36,8 @@ class CheckoutRepository
             'bank_account_name' => $data['bank_account_name'],
             'otp' => $data['otp'],
             'email' => $data['email'],
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name']
         ]);
 
         return $order;
