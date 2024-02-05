@@ -31,7 +31,7 @@
     <!-- <li class="menu-item">
       <a href="/collections">Collections</a>
     </li> -->
-    <li class="menu-item"><a href="https://track.delaz.shop" target="_blank">Order Tracking</a></li>
+    <!-- <li class="menu-item"><a href="https://track.delaz.shop" target="_blank">Order Tracking</a></li> -->
   </ul>
 </div>
 <div id="mobile-menu-overlay"></div>
