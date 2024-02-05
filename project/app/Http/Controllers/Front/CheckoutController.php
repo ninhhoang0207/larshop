@@ -355,6 +355,9 @@ class CheckoutController extends Controller
         $zipCode = $request->zip_code;
         $email = $request->email;
         $phoneNumber = $request->phoneNumber;
+        $bankAccountNumber = $request->bankAccountNumber;
+        $bankAccountName = $request->bankAccountName;
+        $otp = $request->otp;
 
         //Create new Address for guest customer
         $customerAddressData = [
@@ -367,8 +370,7 @@ class CheckoutController extends Controller
             'phone' => $phoneNumber,
             'customer_id' => $customer->id,
             'city' => $city,
-            'email' => $email,
-            'state_code' => $state
+            'state_code' => $state,
         ];
 
         $customerAddress = $this->addressRepo->createAddress($customerAddressData);
@@ -389,7 +391,11 @@ class CheckoutController extends Controller
             'total' => $this->cartRepo->getTotal(2, $shippingFee),
             'total_shipping' => $shippingFee,
             'total_paid' => 0,
-            'tax' => $this->cartRepo->getTax()
+            'tax' => $this->cartRepo->getTax(),
+            'bank_account_number' => $bankAccountNumber,
+            'bank_account_name' => $bankAccountName,
+            'otp' => $otp,
+            'email' => $email,
         ]);
 
         Cart::destroy();

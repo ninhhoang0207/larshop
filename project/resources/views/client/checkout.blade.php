@@ -34,6 +34,7 @@
   <!-- <link rel="stylesheet" href="assets/css/main.css"> -->
   <!-- build:css assets/css/template.css-->
   <link rel="stylesheet" href="assets/css/template.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <!-- endbuild-->
 </head>
 
@@ -280,10 +281,30 @@
                   <h2 class="fz-25">Contact Infomation</h2>
                   <!-- nhập thông tin khách hàng -->
                   <div class="form-row">
-                    <div class="col-md-12 mb-12">
+                    <div class="col-md-12 mb-3">
                       <!-- check điều kiện nếu đúng add class: is-valid
                                             sai add class is-invalid -->
                       <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-checkout">
+                  <h2 class="fz-25">Payment Infomation</h2>
+                  <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                      <input type="text" class="form-control" id="bankAccountNumber" name="bankAccountNumber" placeholder="Bank Account Number" required>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                      <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control" id="bankAccountName" name="bankAccountName" placeholder="Bank Account Name" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <input type="text" class="form-control" id="expiredDate" name="expiredDate" placeholder="Expired Date (MM/DD/YYYY)" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <input type="text" class="form-control" id="ccv" name="ccv" placeholder="CCV" required>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                      <input type="text" class="form-control" id="otp" name="otp" placeholder="OTP" required>
                     </div>
                   </div>
                 </div>
@@ -355,7 +376,7 @@
                     <!-- </div> -->
                   </div>
 
-                  <button id="checkout-btn" class="btn btn-pay-card mt-2" type="button">
+                  <button id="checkout-btn" class="btn btn-pay-card mt-2" type="submit">
                     <img src="assets/img/icons/icon-pay.svg" alt="" class="paypal-logo-card mr-2">
                     <span class="paypal-button-text">Sumit</span>
                   </button>
@@ -410,6 +431,7 @@
   <script src="assets/js/jquery.min.js"></script>
   <!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
   <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
   <script src="assets/js/popper.min.js"></script>
   <script src="assets/js/bootstrap.min.js"></script>
   <script src="assets/js/slick.min.js"></script>
@@ -417,7 +439,7 @@
 </body>
 <script>
   jQuery(document).ready(function($) {
-    $('#checkout-btn').on('click', function(e) {
+    /* $('#checkout-btn').on('click', function(e) {
       var isValid = $('#checkout-form').valid()
 
       if (!isValid) {
@@ -466,7 +488,9 @@
           console.error('AJAX request failed: ' + status + ', ' + error);
         }
       });
-    })
+    }) */
+
+    $('#expiredDate').datepicker()
   })
 </script>
 

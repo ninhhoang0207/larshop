@@ -44,7 +44,7 @@
     <img class="mr-1 img-icon-wallet" src="assets/img/icons/icon-wallet.svg" alt="">
     Buy now
   </a>
-  <a class="go-to-cart go-show-mini-cart ml-2" href="javascript:">
+  <a class="go-to-cart go-show-mini-cart ml-2" href="{{ route('checkout') }}">
     <span class="title">Checkout</span>
     <img src="assets/img/icons/cart.svg">
     <span id="mini-cart-count" class="text-white bg-danger text-center bag">
