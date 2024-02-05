@@ -70,12 +70,14 @@ class ProductController extends Controller
         $images = $product->images()->get();
         $category = $product->categories()->first();
         $productAttributes = $product->attributes;
+        $productAttributeDefault = $productAttributes->firstWhere('default', 1) ?? $productAttributes->first();
 
         return view('client.product', compact(
             'product',
             'images',
             'productAttributes',
-            'category'
+            'category',
+            'productAttributeDefault'
         ));
     }
 }

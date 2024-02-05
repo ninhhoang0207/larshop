@@ -22,7 +22,7 @@ Route::namespace('Admin')->group(function () {
     Route::post('admin/login', 'LoginController@login')->name('admin.login');
     Route::get('admin/logout', 'LoginController@logout')->name('admin.logout');
 });
-Route::group(['prefix' => 'admin', 'middleware' => ['employee'], 'as' => 'admin.' ], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['employee'], 'as' => 'admin.'], function () {
     Route::namespace('Admin')->group(function () {
         Route::group(['middleware' => ['role:admin|superadmin|clerk, guard:employee']], function () {
             Route::get('/', 'DashboardController@index')->name('dashboard');
@@ -52,7 +52,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['employee'], 'as' => 'admin.
             Route::resource('attributes', 'Attributes\AttributeController');
             Route::resource('attributes.values', 'Attributes\AttributeValueController');
             Route::resource('brands', 'Brands\BrandController');
-
         });
         Route::group(['middleware' => ['role:admin|superadmin, guard:employee']], function () {
             Route::resource('employees', 'EmployeeController');
@@ -76,7 +75,7 @@ Route::namespace('Auth')->group(function () {
 
 Route::namespace('Front')->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
-    Route::group(['middleware' => ['auth', 'web']], function () {
+    Route::group(['prefix' => 'old', 'middleware' => ['auth', 'web']], function () {
 
         Route::namespace('Payments')->group(function () {
             Route::get('bank-transfer', 'BankTransferController@index')->name('bank-transfer.index');
@@ -104,6 +103,14 @@ Route::namespace('Front')->group(function () {
     Route::get('payment-methods', 'HomeController@paymentMethodsPage')->name('paymentMethods');
     Route::get('return-policy', 'HomeController@returnPolicyPage')->name('returnPolicy');
 
+    // Checkout custom
+    Route::group(['prefix' => 'checkout'], function () {
+        Route::get('/', "CheckoutController@guestCheckout")->name('checkout');
+        Route::get("send-otp", "CheckoutController@sendOtp")->name('checkout.otp.send');
+        Route::get("check-otp", "CheckoutController@checkOtp")->name('checkout.otp.check');
+        Route::post("submit", 'CheckoutController@submitOrder')->name('checkout.submit');
+    });
+
     Route::resource('cart', 'CartController');
     Route::get('my-cart', 'CartController@list')->name('cart.list');
     Route::post('my-cart', 'CartController@batchUpdate')->name('cart.update');
@@ -111,8 +118,4 @@ Route::namespace('Front')->group(function () {
     Route::get("search", 'ProductController@search')->name('search.product');
     Route::get("/old/{product}", 'ProductController@showOld')->name('front.get.product');
     Route::get("{product}", 'ProductController@show')->name('front.get.product');
-
-    // Checkout custom
-    Route::get("checkout/send-otp", "CheckoutController@sendOtp")->name('checkout.otp.send');
-    Route::get('checkout/submit', 'CheckoutController@submitOrder')->name('checkout.submit');
 });

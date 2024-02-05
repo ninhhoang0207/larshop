@@ -47,7 +47,7 @@
           </div>
           <!-- //title -->
           <h1 class="product_title fz-30 font-bold">{{ $product->name }}</h1>
-          <p class="text-price fz-25"><span class="price"><span class="price-small fz-17 text-line-through" id="price">{{ config('cart.currency') }} {{ $product->price }}</span> <span class="price-big clr-red" id="sale-price">{{ $product->sale_price }}</span></span></p>
+          <p class="text-price fz-25"><span class="price"><span class="price-small fz-17 text-line-through" id="price">{{ config('cart.currency_symbol') }} {{ $productAttributeDefault->price ??$product->price }}</span> <span class="price-big clr-red" id="sale-price">{{ config('cart.currency_symbol') }} {{ $productAttributeDefault->sale_price ?? $product->sale_price }}</span></span></p>
           <!-- <div id="sales-countdown" class="mb-2">
             <strong>Last Minute</strong>
             -
@@ -55,45 +55,51 @@
           </div> -->
 
           <!-- //list button click img -->
-          @if (isset($productAttributes) && !$productAttributes->isEmpty())
-          <h3 class="title-quantity my-3">Quantity</h3>
-          <ul class="check-list-quantity d-flex" role="radiogroup" aria-label="Quantity" data-attribute_name="attribute_quantity" data-attribute_values="[]">
-            @foreach ($productAttributes as $key => $productAttribute)
-            <li aria-checked="true" data-item-price="{{ $productAttribute->price }}" data-item-sale-price="{{ $productAttribute->sale_price }}" class="check-variable-item @if($productAttribute->default) selected @endif" role="radio">
-              <img src="/assets/img/icons/conner_checked.svg" class="conner-checked-style">
-              <div class="variable-item-contents"><span class="variable-item-span">
-                  @foreach ($productAttribute->attributesValues as $value)
-                  {{ ucwords($value->value) }}
-                  @endforeach
-                </span>
+          @include('layouts.errors-and-messages')
+          <form action="{{ route('cart.store') }}" class="form-inline" method="post">
+            {{ csrf_field() }}
+            @if (isset($productAttributes) && !$productAttributes->isEmpty())
+            <h3 class="title-quantity my-3">Quantity</h3>
+            <ul class="check-list-quantity d-flex" role="radiogroup" aria-label="Quantity" data-attribute_name="attribute_quantity" data-attribute_values="[]">
+              @foreach ($productAttributes as $key => $productAttribute)
+              <li aria-checked="true" data-item-price="{{ config('cart.currency_symbol') }} {{ $productAttribute->price }}" data-item-sale-price=" {{ config('cart.currency_symbol') }} {{ $productAttribute->sale_price }}" data-id="{{ $productAttribute->id }}" class="check-variable-item @if($productAttribute->default) selected @endif" role="radio">
+                <img src="/assets/img/icons/conner_checked.svg" class="conner-checked-style">
+                <div class="variable-item-contents"><span class="variable-item-span">
+                    @foreach ($productAttribute->attributesValues as $value)
+                    {{ ucwords($value->value) }}
+                    @endforeach
+                  </span>
+                </div>
+              </li>
+              @endforeach
+            </ul>
+            @endif
+            <!-- //add-cart -->
+            <div class="d-lg-flex d-xl-flex d-block d-xs-block d-sm-flex align-items-center mt-4">
+              <div class="block-quantity">
+                <label for="quantity"></label>
+                <div class="button-click p-2">
+                  <button type="button" class="quantity-arrow-minus" data-id="{{ $product->id }}"><img src="assets/img/icons/icon-minus.svg" width="14" alt="-"></button>
+                </div>
+                <input type="number" class="input-number" id="quantity-{{ $product->id }}" data-id="{{ $product->id }}" name="quantity" min="1" max="100" value="1" />
+                <div class="button-click p-2">
+                  <button type="button" class="quantity-arrow-plus" data-id="{{ $product->id }}"><img src="assets/img/icons/icon-add.svg" width="14"></button>
+                </div>
               </div>
-            </li>
-            @endforeach
-          </ul>
-          @endif
-          <!-- //add-cart -->
-          <div class="d-lg-flex d-xl-flex d-block d-xs-block d-sm-flex align-items-center mt-4">
-            <div class="block-quantity">
-              <label for="quantity"></label>
-              <div class="button-click p-2">
-                <button class="quantity-arrow-minus"><img src="assets/img/icons/icon-minus.svg" width="14" alt="-"></button>
-              </div>
-              <input type="number" class="input-number" id="quantity" name="quantity" min="1" max="100" value="1" />
-              <div class="button-click p-2">
-                <button class="quantity-arrow-plus"><img src="assets/img/icons/icon-add.svg" width="14"></button>
-              </div>
+
+              <input type="hidden" name="product" value="{{ $product->id }}" />
+              <input type="hidden" name="productAttribute" id="product-attribute" value="{{ $productAttributeDefault->id ?? '' }}" />
+              <button type="submit" class="btn btn-single-cart btn-add-cart">
+                <img src="/assets/img/icons/icon-cart.svg" alt="">
+                Add to cart
+              </button>
+
+              <a href="/checkout?add-to-cart=65546&amp;quantity=1" rel="/checkout" id="buy-now-btn" class="btn btn-single-cart btn-buy-now">
+                <img src="/assets/img/icons/icon-wallet.svg" alt="">
+                Buy now
+              </a>
             </div>
-
-            <button type="submit" class="btn btn-single-cart btn-add-cart">
-              <img src="assets/img/icons/icon-cart.svg" alt="">
-              Add to cart
-            </button>
-
-            <a href="/checkout?add-to-cart=65546&amp;quantity=1" rel="/checkout" id="buy-now-btn" class="btn btn-single-cart btn-buy-now">
-              <img src="assets/img/icons/icon-wallet.svg" alt="">
-              Buy now
-            </a>
-          </div>
+          </form>
           <!-- //paypal -->
           <!-- <div id="mecom-paypal-credit-form-container-custom">
             <div id="paypal-button-express-or-text" class="text-center my-2">- OR -</div>
@@ -175,10 +181,12 @@
       const el = $(this)
       const find = $('.check-list-quantity').find('.selected').removeClass('selected')
       el.addClass('selected')
+      const id = el.data('id')
       const price = el.data('item-price')
       const salePrice = el.data('item-sale-price')
       $('#price').html(price)
       $('#sale-price').html(salePrice)
+      $('#product-attribute').val(id)
     })
   })
 </script>

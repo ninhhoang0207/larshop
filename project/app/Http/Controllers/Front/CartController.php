@@ -123,7 +123,7 @@ class CartController extends Controller
 
         $this->cartRepo->addToCart($product, $request->input('quantity'), $options);
 
-        return redirect()->route('cart.index')
+        return redirect()->route('cart.list')
             ->with('message', 'Add to cart successful');
     }
 

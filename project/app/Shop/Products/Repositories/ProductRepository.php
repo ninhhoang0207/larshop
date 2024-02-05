@@ -49,7 +49,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
     public function paginate()
     {
-        return $this->model->paginate(8);
+        return $this->model->paginate(16);
     }
 
     /**

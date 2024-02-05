@@ -29,7 +29,14 @@
                     <a href="#"><img src="{{ $cartItem->cover ?? asset('images/NoData.png') }}" class="img-thumbnail" alt="" decoding="async" loading="lazy"></a>
                   </td>
                   <td class="product-name" data-title="Product">
-                    <a href="#">{{ $cartItem->name }}</a>
+                    <a href="{{ route('front.get.product', $cartItem->product->slug) }}">{{ $cartItem->name }}</a>
+                    @if($cartItem->options->has('combination'))
+                    <div style="margin-bottom:5px;">
+                      @foreach($cartItem->options->combination as $option)
+                      <small class="label label-primary">{{$option['value']}}</small>
+                      @endforeach
+                    </div>
+                    @endif
                   </td>
                   <td class="product-price" data-title="Price">
                     <span class="price-amount amount"><bdi><span class="price-currencysymbol">{{ config('cart.currency_symbol') }}</span>{{ $cartItem->price }}</bdi></span>
@@ -104,7 +111,7 @@
             </table>
 
             <div class="wc-proceed-to-checkout">
-              <a href="/page-checkout.html" class="btn btn-checkout-button">
+              <a href="{{ route('checkout') }}" class="btn btn-checkout-button">
                 Proceed to checkout</a>
             </div>
           </div>
