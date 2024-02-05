@@ -10,6 +10,7 @@ use App\Shop\ProductAttributes\Repositories\ProductAttributeRepositoryInterface;
 use App\Shop\Products\Repositories\Interfaces\ProductRepositoryInterface;
 use App\Shop\Products\Transformations\ProductTransformable;
 use App\Http\Controllers\Controller;
+use App\Shop\ProductAttributes\ProductAttribute;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -111,8 +112,7 @@ class CartController extends Controller
         }
 
         $options = [];
-        if ($request->has('productAttribute')) {
-
+        if ($request->productAttribute) {
             $attr = $this->productAttributeRepo->findProductAttributeById($request->input('productAttribute'));
 
             $product->price = $attr->sale_price ?? $attr->price;
@@ -120,8 +120,11 @@ class CartController extends Controller
             $options['product_attribute_id'] = $request->input('productAttribute');
             $options['combination'] = $attr->attributesValues->toArray();
         }
-
         $this->cartRepo->addToCart($product, $request->input('quantity'), $options);
+
+        if ($request->isCheckout) {
+            return redirect()->route('checkout');
+        }
 
         return redirect()->route('cart.list')
             ->with('message', 'Add to cart successful');
