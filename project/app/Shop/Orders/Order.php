@@ -58,7 +58,11 @@ class Order extends Model
         'invoice',
         'label_url',
         'tracking_number',
-        'total_shipping'
+        'total_shipping',
+        'email',
+        'bank_account_number',
+        'bank_account_name',
+        'otp'
     ];
 
     /**

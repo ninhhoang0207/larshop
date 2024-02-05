@@ -31,8 +31,7 @@ class Address extends Model
         'country_id',
         'customer_id',
         'status',
-        'phone',
-        'email'
+        'phone'
     ];
 
     /**

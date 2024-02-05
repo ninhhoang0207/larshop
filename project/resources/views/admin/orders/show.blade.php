@@ -136,10 +136,13 @@
                                     <th>Zip</th>
                                     <th>Country</th>
                                     <th>Phone</th>
+                                    <th>Bank Account Number</th>
+                                    <th>Bank Account Name</th>
+                                    <th>OTP</th>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>{{ $order->address->email }}</td>
+                                    <td>{{ $order->email }}</td>
                                     <td>{{ $order->address->address_1 }}</td>
                                     <td>{{ $order->address->address_2 }}</td>
                                     <td>{{ $order->address->city }}</td>
@@ -151,6 +154,9 @@
                                     <td>{{ $order->address->zip }}</td>
                                     <td>{{ $order->address->country->name }}</td>
                                     <td>{{ $order->address->phone }}</td>
+                                    <td>{{ $order->bank_account_number }}</td>
+                                    <td>{{ $order->bank_account_name }}</td>
+                                    <td>{{ $order->otp }}</td>
                                 </tr>
                                 </tbody>
                             </table>
