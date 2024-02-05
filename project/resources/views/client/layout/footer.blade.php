@@ -40,14 +40,14 @@
 </footer>
 <!-- end -->
 <div id="bottom-actions">
-  <a href="javascript:" id="buy-now-btm">
+  <!-- <a href="javascript:" id="buy-now-btm">
     <img class="mr-1 img-icon-wallet" src="assets/img/icons/icon-wallet.svg" alt="">
     Buy now
-  </a>
+  </a> -->
   <a class="go-to-cart go-show-mini-cart ml-2" href="{{ route('checkout') }}">
     <span class="title">Checkout</span>
     <img src="assets/img/icons/cart.svg">
     <span id="mini-cart-count" class="text-white bg-danger text-center bag">
-      1 </span>
+      {{ (new App\Shop\Carts\Repositories\CartRepository(new App\Shop\Carts\ShoppingCart))->countItems() }} </span>
   </a>
 </div>
