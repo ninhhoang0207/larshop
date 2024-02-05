@@ -31,7 +31,8 @@ class Address extends Model
         'country_id',
         'customer_id',
         'status',
-        'phone'
+        'phone',
+        'email'
     ];
 
     /**
@@ -56,7 +57,7 @@ class Address extends Model
             'zip' => 5,
             'city' => 10,
             'state_code' => 10,
-            'phone' => 5
+            'phone' => 5,
         ]
     ];
 

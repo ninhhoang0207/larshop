@@ -111,7 +111,7 @@
             </table>
 
             <div class="wc-proceed-to-checkout">
-              <a href="/page-checkout.html" class="btn btn-checkout-button">
+              <a href="{{ route('checkout') }}" class="btn btn-checkout-button">
                 Proceed to checkout</a>
             </div>
           </div>

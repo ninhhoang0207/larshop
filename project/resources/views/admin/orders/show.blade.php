@@ -128,24 +128,26 @@
                             <h4> <i class="fa fa-map-marker"></i> Address</h4>
                             <table class="table">
                                 <thead>
+                                    <th>Email</th>
                                     <th>Address 1</th>
                                     <th>Address 2</th>
                                     <th>City</th>
-                                    <th>Province</th>
+                                    <!-- <th>Province</th> -->
                                     <th>Zip</th>
                                     <th>Country</th>
                                     <th>Phone</th>
                                 </thead>
                                 <tbody>
                                 <tr>
+                                    <td>{{ $order->address->email }}</td>
                                     <td>{{ $order->address->address_1 }}</td>
                                     <td>{{ $order->address->address_2 }}</td>
                                     <td>{{ $order->address->city }}</td>
-                                    <td>
+                                    <!-- <td>
                                         @if(isset($order->address->province))
                                             {{ $order->address->province->name }}
                                         @endif
-                                    </td>
+                                    </td> -->
                                     <td>{{ $order->address->zip }}</td>
                                     <td>{{ $order->address->country->name }}</td>
                                     <td>{{ $order->address->phone }}</td>

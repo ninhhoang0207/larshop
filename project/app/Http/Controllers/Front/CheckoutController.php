@@ -27,9 +27,12 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use PayPal\Exception\PayPalConnectionException;
 use Ichtrojan\Otp\Otp;
-use Iyngaran\SmsGateway\SmsGateway;
-use Iyngaran\SmsGateway\TwilioSmsGateway;
 use Twilio\Rest\Client;
+use Ramsey\Uuid\Uuid;
+use App\Shop\OrderStatuses\Repositories\OrderStatusRepository;
+use App\Shop\OrderStatuses\OrderStatus;
+use App\Shop\Checkout\CheckoutRepository;
+
 
 class CheckoutController extends Controller
 {
@@ -258,9 +261,50 @@ class CheckoutController extends Controller
         }
     }
 
-    public function sendOtp(Request $request) {
+    public function guestCheckout()
+    {
+        $customer = Customer::where('email', 'customer@mail.com')->first();
+        $products = $this->cartRepo->getCartItems();
+        $rates = null;
+        $shipment_object_id = null;
+
+        if (env('ACTIVATE_SHIPPING') == 1) {
+            $shipment = $this->createShippingProcess($customer, $products);
+            if (!is_null($shipment)) {
+                $shipment_object_id = $shipment->object_id;
+                $rates = $shipment->rates;
+            }
+        }
+
+        // Get payment gateways
+        $paymentGateways = collect(explode(',', config('payees.name')))->transform(function ($name) {
+            return config($name);
+        })->all();
+
+        // $billingAddress = $customer->addresses()->first();
+        $securedShipping = 0;
+
+        return view('client.checkout', [
+            // 'customer' => $customer,
+            // 'billingAddress' => $billingAddress,
+            // 'addresses' => $customer->addresses()->get(),
+            'products' => $this->cartRepo->getCartItems(),
+            'subtotal' => $this->cartRepo->getSubTotal(),
+            'tax' => $this->cartRepo->getTax(),
+            'total' => $this->cartRepo->getTotal(2) + $securedShipping,
+            'payments' => $paymentGateways,
+            'cartItems' => $this->cartRepo->getCartItemsTransformed(),
+            'shipment_object_id' => $shipment_object_id,
+            'rates' => $rates,
+            'securedShipping' => $securedShipping
+        ]);
+        // return view('client.checkout');
+    }
+
+    public function sendOtp(Request $request)
+    {
         $email = $request->email;
-        $phoneNumber = $request->phone_number;
+        $phoneNumber = $request->phoneNumber;
         $identifyStr = $email . $phoneNumber;
         $code = $this->otp->generate($identifyStr, 'numeric', 4, 1);
 
@@ -271,36 +315,85 @@ class CheckoutController extends Controller
 
         try {
             $client->messages->create(
-                '+84963332383',
+                $phoneNumber,
                 [
                     "body" => $code->token,
                     "from" => $twilioNumber
                 ]
             );
 
-            dd('success');
-            // return redirect()->route('checkout');
+            return $code->token;
         } catch (\Exception $e) {
-            dd(
-                'Could not send SMS notification.' .
-                ' Twilio replied with: ' . print_r($e, true)
-            );
+            return false;
         }
     }
 
-    public function submitOrder(Request $request) {
-        // Verify otp
+    public function checkOtp (Request $request)
+    {
         $email = $request->email;
-        $phoneNumber = $request->phone_number;
+        $phoneNumber = $request->phoneNumber;
         $identifyStr = $email . $phoneNumber;
 
         $validateOtp = $this->otp->validate($identifyStr, $request->otp);
         if (!$validateOtp || !$validateOtp->status) {
-            return redirect()->back()->withInput();
+            return 0;
         }
 
-        // Todo: save order
-        return redirect()->route('checkout.success');
+        return 1;
+    }
 
+    public function submitOrder(Request $request)
+    {
+        $customer = Customer::first();
+        $alias = 'Customer Address';
+        $status = 1;
+        $address1 = $request->address1;
+        $address2 = $request->address2;
+        $countryId = "232";
+        $city = $request->city;
+        $state = $request->state;
+        $zipCode = $request->zip_code;
+        $email = $request->email;
+        $phoneNumber = $request->phoneNumber;
+
+        //Create new Address for guest customer
+        $customerAddressData = [
+            'status' => $status,
+            'alias' => $alias,
+            'address_1' => $address1,
+            'address_2' => $address2,
+            'country_id' => $countryId,
+            'zip' => $zipCode,
+            'phone' => $phoneNumber,
+            'customer_id' => $customer->id,
+            'city' => $city,
+            'email' => $email,
+            'state_code' => $state
+        ];
+
+        $customerAddress = $this->addressRepo->createAddress($customerAddressData);
+        $checkoutRepo = new CheckoutRepository;
+        $orderStatusRepo = new OrderStatusRepository(new OrderStatus);
+        $os = $orderStatusRepo->findByName('ordered');
+        $shippingFee = 0;
+
+        $checkoutRepo->buildCheckoutItems([
+            'reference' => Uuid::uuid4()->toString(),
+            'courier_id' => 1, // @deprecated
+            'customer_id' => $customer->id,
+            'address_id' => $customerAddress->id,
+            'order_status_id' => $os->id,
+            'payment' => strtolower(config('bank-transfer.name')),
+            'discounts' => 0,
+            'total_products' => $this->cartRepo->getSubTotal(),
+            'total' => $this->cartRepo->getTotal(2, $shippingFee),
+            'total_shipping' => $shippingFee,
+            'total_paid' => 0,
+            'tax' => $this->cartRepo->getTax()
+        ]);
+
+        Cart::destroy();
+
+        return redirect()->route('home')->with('message', 'Order successful!');
     }
 }
