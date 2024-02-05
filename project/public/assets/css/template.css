@@ -23,6 +23,11 @@ h5,
 h6 {
   line-height: 1.5; }
 
+ul {
+  padding: 0;
+  padding-inline-start: 0px;
+  list-style: none; }
+
 img {
   height: auto;
   max-width: 100%; }
@@ -100,13 +105,12 @@ a#pull {
   position: fixed;
   max-width: 340px;
   width: 70%;
-  left: 0;
+  left: 100%;
   top: 0;
   bottom: 0;
   background: #222;
   z-index: 199;
-  padding: 40px 0 0;
-  display: none; }
+  padding: 40px 0 0; }
   #sidebar-menu a {
     text-decoration: none;
     color: #FFf;
@@ -248,21 +252,6 @@ a#pull {
 
 .back-to-cart a:hover, .back-to-cart a:active {
   text-decoration: underline; }
-
-.entry-content p {
-  font-size: 15px;
-  margin: 0 0 1.5em; }
-.entry-content h3 {
-  font-size: 21px; }
-.entry-content h4 {
-  font-size: 19px; }
-.entry-content a {
-  color: #000; }
-  .entry-content a:hover {
-    color: #0056b3;
-    text-decoration: underline; }
-.entry-content ul li {
-  font-size: 16px; }
 
 #bottom-actions {
   bottom: 24px;
@@ -605,6 +594,15 @@ footer .contact-btn {
   font-weight: 700;
   margin: 0 2px; }
 
+.pagination nav {
+  width: 100%; }
+  .pagination nav a,
+  .pagination nav span {
+    padding: 10px 15px !important;
+    border: 1px solid #eee;
+    margin: 0 5px;
+    background: #fff; }
+
 .btn {
   border-radius: 3px;
   border: 0;
@@ -930,9 +928,7 @@ input:focus {
 
 .cart-sidebar-content .block-quantity {
   height: 35px;
-  overflow: hidden;
-  min-width: 120px;
-  width: auto !important; }
+  overflow: hidden; }
 
 .block-form-checkout {
   padding-top: 20px;
@@ -956,9 +952,24 @@ input:focus {
     opacity: 1; }
   .form-control:-ms-input-placeholder {
     color: #a3a0a0; }
+  .form-control.error {
+    border: 1px solid #ff4343; }
+    .form-control.error::-webkit-input-placeholder {
+      color: #ff4343; }
+    .form-control.error:-moz-placeholder {
+      color: #ff4343;
+      opacity: 1; }
+    .form-control.error::-moz-placeholder {
+      color: #ff4343;
+      opacity: 1; }
+    .form-control.error:-ms-input-placeholder {
+      color: #ff4343; }
 
 .modal-otp input[type="number"] {
   text-align: left; }
+
+.error {
+  color: #ff4343; }
 
 .slick-arrow {
   width: 40px;

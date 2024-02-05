@@ -70,13 +70,13 @@ a#pull {
     position: fixed;
     max-width: 340px;
     width: 70%;
-    left: 0;
+    left: 100%;
     top: 0;
     bottom: 0;
     background: #222;
     z-index: 199;
     padding: 40px 0 0;
-    display: none;
+    // display: none;
     a{
         text-decoration: none;
         color: #FFf;

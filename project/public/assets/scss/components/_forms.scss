@@ -58,8 +58,8 @@ input{
   .block-quantity {
     height: 35px;
     overflow: hidden;
-    min-width: 120px;
-    width: auto!important;
+    // min-width: 120px;
+    // width: auto!important;
   }
 }
 
@@ -77,9 +77,16 @@ input{
   height: 50px;
   color: $clr-black;
   @include placeholder(#a3a0a0);
+  &.error{
+    border: 1px solid $clr-red;
+    @include placeholder($clr-red);
+  }
 }
 .modal-otp{
   input[type="number"] {
     text-align: left;
   }
+}
+.error{
+  color: $clr-red;
 }

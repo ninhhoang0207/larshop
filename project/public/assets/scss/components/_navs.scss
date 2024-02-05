@@ -5,8 +5,10 @@
     margin: 1px;
     list-style: none;
     flex-wrap: wrap;
+
     li {
         margin-top: 8px;
+
         span,
         a {
             border: 1px solid #eee;
@@ -37,9 +39,24 @@
         }
     }
 }
+
 //home quantity
-.title-quantity{
+.title-quantity {
     font-size: .85em;
     font-weight: 700;
     margin: 0 2px;
+}
+
+.pagination {
+    nav {
+        width: 100%;
+
+        a,
+        span {
+            padding: 10px 15px !important;
+            border: 1px solid #eee;
+            margin: 0 5px;
+            background: #fff;
+        }
+    }
 }
