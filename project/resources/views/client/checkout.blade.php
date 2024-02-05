@@ -52,7 +52,7 @@
                   <div class="logo">
                     <img src="assets/img/TopSwift.png">
                   </div>
-                  <img class="d-none d-sm-block img-trusted" src="assets/img/icons/trusted.svg">
+                  <!-- <img class="d-none d-sm-block img-trusted" src="assets/img/icons/trusted.svg"> -->
                 </div>
                 <div class="order-summary">
                   <div class="order-summary-header">

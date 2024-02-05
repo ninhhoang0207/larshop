@@ -261,7 +261,7 @@ class CheckoutController extends Controller
         }
     }
 
-    public function guestCheckout()
+    public function guestCheckout(Request $request)
     {
         $customer = Customer::where('email', 'customer@mail.com')->first();
         $products = $this->cartRepo->getCartItems();

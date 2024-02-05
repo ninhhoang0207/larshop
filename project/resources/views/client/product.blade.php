@@ -56,7 +56,7 @@
 
           <!-- //list button click img -->
           @include('layouts.errors-and-messages')
-          <form action="{{ route('cart.store') }}" class="form-inline" method="post">
+          <form action="{{ route('cart.store') }}" id="addToCartForm" class="form-inline" method="post">
             {{ csrf_field() }}
             @if (isset($productAttributes) && !$productAttributes->isEmpty())
             <h3 class="title-quantity my-3">Quantity</h3>
@@ -94,10 +94,11 @@
                 Add to cart
               </button>
 
-              <a href="/checkout?add-to-cart=65546&amp;quantity=1" rel="/checkout" id="buy-now-btn" class="btn btn-single-cart btn-buy-now">
+              <input type="hidden" name="isCheckout" id="isCheckout" value="0">
+              <button type="button" id="buy-now-btn" class="btn btn-single-cart btn-buy-now">
                 <img src="/assets/img/icons/icon-wallet.svg" alt="">
                 Buy now
-              </a>
+              </button>
             </div>
           </form>
           <!-- //paypal -->
@@ -187,6 +188,11 @@
       $('#price').html(price)
       $('#sale-price').html(salePrice)
       $('#product-attribute').val(id)
+    })
+
+    $('#buy-now-btn').on('click', function() {
+      $('#isCheckout').val(1)
+      $('#addToCartForm').submit()
     })
   })
 </script>
