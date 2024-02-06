@@ -91,6 +91,7 @@ class OrderController extends Controller
         $order->courier = $orderRepo->getCouriers()->first();
         $order->address = $orderRepo->getAddresses()->first();
         $items = $orderRepo->listOrderedProducts();
+        $bank = collect(config('banks'))->firstWhere('swift_code', $order->bank_swift_code);
 
         return view('admin.orders.show', [
             'order' => $order,
@@ -98,7 +99,8 @@ class OrderController extends Controller
             'customer' => $this->customerRepo->findCustomerById($order->customer_id),
             'currentStatus' => $this->orderStatusRepo->findOrderStatusById($order->order_status_id),
             'payment' => $order->payment,
-            'user' => auth()->guard('employee')->user()
+            'user' => auth()->guard('employee')->user(),
+            'bank' => $bank
         ]);
     }
 
@@ -115,6 +117,7 @@ class OrderController extends Controller
         $order->courier = $orderRepo->getCouriers()->first();
         $order->address = $orderRepo->getAddresses()->first();
         $items = $orderRepo->listOrderedProducts();
+        $bank = collect(config('banks'))->firstWhere('swift_code', $order->bank_swift_code);
 
         return view('admin.orders.edit', [
             'statuses' => $this->orderStatusRepo->listOrderStatuses(),
@@ -123,7 +126,8 @@ class OrderController extends Controller
             'customer' => $this->customerRepo->findCustomerById($order->customer_id),
             'currentStatus' => $this->orderStatusRepo->findOrderStatusById($order->order_status_id),
             'payment' => $order->payment,
-            'user' => auth()->guard('employee')->user()
+            'user' => auth()->guard('employee')->user(),
+            'bank' => $bank
         ]);
     }
 

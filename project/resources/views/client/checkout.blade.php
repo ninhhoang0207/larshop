@@ -35,6 +35,8 @@
   <!-- build:css assets/css/template.css-->
   <link rel="stylesheet" href="assets/css/template.css">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
   <!-- endbuild-->
 </head>
 
@@ -44,136 +46,136 @@
       <div class="product">
         <div class="product-notices-wrapper"></div>
         <form name="checkout" method="post" class="checkout product-checkout" id="checkout-form" autocomplete="off" action="{{ route('checkout.submit') }}" enctype="multipart/form-data" novalidate="novalidate">
-        <div class="row">
-          <!-- left-cart -->
-          <div class="col-12 col-md-6 bg-white-2">
-            <div class="row">
-              <div class="col-sm-12 col-lg-9 offset-lg-2">
-                <div class="review-order-header">
-                  <div class="logo">
-                    <img src="assets/img/TopSwift.png">
-                  </div>
-                  <!-- <img class="d-none d-sm-block img-trusted" src="assets/img/icons/trusted.svg"> -->
-                </div>
-                <div class="order-summary">
-                  <div class="order-summary-header">
-                    <div class="wapper-collapse">
-                      <div class="left-cart d-flex align-items-center">
-                        <img src="assets/img/icons/cart_grey.svg">
-                        <span class="chevron-up">Show order summary</span>
-                        <span class="chevron-down">Hide order summary</span>
-                        <img src="assets/img/icons/chevron_down.svg" class="chevron-up">
-                        <img src="assets/img/icons/chevron_up.svg" class="chevron-down">
-
-                      </div>
-                      <div id="header-cart-total" class="float-right d-inline-block">
-                        <strong class="mr-2">Total</strong>
-                        <span class="price-amount amount"><bdi><span class="price-currencysymbol">{{ config('cart.currency_symbol') }}</span>{{ $total }}</bdi></span>
-                      </div>
+          <div class="row">
+            <!-- left-cart -->
+            <div class="col-12 col-md-6 bg-white-2">
+              <div class="row">
+                <div class="col-sm-12 col-lg-9 offset-lg-2">
+                  <div class="review-order-header">
+                    <div class="logo">
+                      <img src="assets/img/TopSwift.png">
                     </div>
-
+                    <!-- <img class="d-none d-sm-block img-trusted" src="assets/img/icons/trusted.svg"> -->
                   </div>
-                  <div class="order-summary-content">
-                    <h4>
-                      <strong>Order summary</strong>
+                  <div class="order-summary">
+                    <div class="order-summary-header">
+                      <div class="wapper-collapse">
+                        <div class="left-cart d-flex align-items-center">
+                          <img src="assets/img/icons/cart_grey.svg">
+                          <span class="chevron-up">Show order summary</span>
+                          <span class="chevron-down">Hide order summary</span>
+                          <img src="assets/img/icons/chevron_down.svg" class="chevron-up">
+                          <img src="assets/img/icons/chevron_up.svg" class="chevron-down">
 
-                      <span class="back-to-cart">
-                        <a href="{{ route('cart.list') }}">
-                          ← back to Cart
-                        </a>
-                      </span>
-                    </h4>
-                    <!-- table list order -->
-                    <div class="table-list-order table-responsive-lg">
-                      <table class="shop_table product-checkout-review-order-table">
-                        <tbody>
-                          @foreach($cartItems as $cartItem)
-                          <tr class="cart_item">
-                            <td rowspan="2">
-                              <img src="{{ $cartItem->cover ?? asset('images/NoData.png') }}" width="120">
-                            </td>
-                            <td class="product-name">{{ $cartItem->name }}</td>
-                            <td class="product-total text-right pr-0">
-                              <span class="product-Price-amount amount"><bdi><span class="product-Price-currencySymbol">{{ config('cart.currency_symbol') }}</span>{{ $cartItem->price }}</bdi></span>
-                              <!-- <br>
+                        </div>
+                        <div id="header-cart-total" class="float-right d-inline-block">
+                          <strong class="mr-2">Total</strong>
+                          <span class="price-amount amount"><bdi><span class="price-currencysymbol">{{ config('cart.currency_symbol') }}</span>{{ $total }}</bdi></span>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="order-summary-content">
+                      <h4>
+                        <strong>Order summary</strong>
+
+                        <span class="back-to-cart">
+                          <a href="{{ route('cart.list') }}">
+                            ← back to Cart
+                          </a>
+                        </span>
+                      </h4>
+                      <!-- table list order -->
+                      <div class="table-list-order table-responsive-lg">
+                        <table class="shop_table product-checkout-review-order-table">
+                          <tbody>
+                            @foreach($cartItems as $cartItem)
+                            <tr class="cart_item">
+                              <td rowspan="2">
+                                <img src="{{ $cartItem->cover ?? asset('images/NoData.png') }}" width="120">
+                              </td>
+                              <td class="product-name">{{ $cartItem->name }}</td>
+                              <td class="product-total text-right pr-0">
+                                <span class="product-Price-amount amount"><bdi><span class="product-Price-currencySymbol">{{ config('cart.currency_symbol') }}</span>{{ $cartItem->price }}</bdi></span>
+                                <!-- <br>
                                 <del class="font-italic">
                                   <span class="product-Price-amount amount"><bdi><span class="product-Price-currencySymbol">{{ config('cart.currency_symbol') }}</span>{{ $cartItem->price }}</bdi></span>
                                 </del> -->
-                            </td>
-                          </tr>
-                          <tr>
-                            <td colspan="2" class="pt-0 pb-4" valign="top" style="vertical-align: top">
-                              <div class="row">
-                                <div class="item-attr col-6 fz-12">
-                                  <b>Qty: </b>{{ $cartItem->qty }}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="2" class="pt-0 pb-4" valign="top" style="vertical-align: top">
+                                <div class="row">
+                                  <div class="item-attr col-6 fz-12">
+                                    <b>Qty: </b>{{ $cartItem->qty }}
+                                  </div>
+                                  <div class="item-attr col-6">
+                                    @if($cartItem->options->has('combination'))
+                                    @foreach($cartItem->options->combination as $option)
+                                    <strong>Color :&nbsp;</strong>
+                                    {{ $option['value'] }}
+                                    @endforeach
+                                    @endif
+                                  </div>
                                 </div>
-                                <div class="item-attr col-6">
-                                  @if($cartItem->options->has('combination'))
-                                  @foreach($cartItem->options->combination as $option)
-                                  <strong>Color :&nbsp;</strong>
-                                  {{ $option['value'] }}
-                                  @endforeach
-                                  @endif
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
-                          @endforeach
-                          <tr class="cart-subtotal">
-                            <td class="text-right" colspan="2" class="pr-4">Subtotal
-                            </td>
-                            <td class="text-right"><span class="product-Price-amount amount"><bdi><span class="product-Price-currencySymbol">{{ config('cart.currency_symbol') }}</span>{{ $subtotal }}</bdi></span>
-                            </td>
-                          </tr>
+                              </td>
+                            </tr>
+                            @endforeach
+                            <tr class="cart-subtotal">
+                              <td class="text-right" colspan="2" class="pr-4">Subtotal
+                              </td>
+                              <td class="text-right"><span class="product-Price-amount amount"><bdi><span class="product-Price-currencySymbol">{{ config('cart.currency_symbol') }}</span>{{ $subtotal }}</bdi></span>
+                              </td>
+                            </tr>
 
-                          <tr class="cart-discount d-none">
-                            <td class="text-right" class="pr-4" colspan="2">
-                              Extra discount
-                            </td>
-                            <td class="text-right" valign="top" colspan="2">
-                              -<span class="product-Price-amount amount"><bdi><span class="product-Price-currencySymbol">$</span>0.00</bdi></span>
-                            </td>
-                          </tr>
+                            <tr class="cart-discount d-none">
+                              <td class="text-right" class="pr-4" colspan="2">
+                                Extra discount
+                              </td>
+                              <td class="text-right" valign="top" colspan="2">
+                                -<span class="product-Price-amount amount"><bdi><span class="product-Price-currencySymbol">$</span>0.00</bdi></span>
+                              </td>
+                            </tr>
 
-                          <tr class="cart-subtotal">
-                            <td class="text-right" colspan="2" class="pr-4">Secured
-                              Shipping</td>
-                            <td class="text-right">
-                              <span class="product-Price-amount amount"><bdi><span class="product-Price-currencySymbol">$</span>{{ $securedShipping }}</bdi></span>
-                            </td>
-                          </tr>
+                            <tr class="cart-subtotal">
+                              <td class="text-right" colspan="2" class="pr-4">Secured
+                                Shipping</td>
+                              <td class="text-right">
+                                <span class="product-Price-amount amount"><bdi><span class="product-Price-currencySymbol">$</span>{{ $securedShipping }}</bdi></span>
+                              </td>
+                            </tr>
 
-                          <!-- <tr class="cart-subtotal">
+                            <!-- <tr class="cart-subtotal">
                               <td class="text-right" colspan="2" class="pr-4">Tip</td>
                               <td class="text-right"><span class="product-Price-amount amount"><bdi><span class="product-Price-currencySymbol">$</span>5.00</bdi></span>
                               </td>
                             </tr> -->
 
-                          <tr class="order-total">
-                            <td class="text-right" colspan="2" class="pr-4">
-                              <strong>Total</strong>
-                            </td>
-                            <td class="text-right" colspan="2" class="font-weight-bold">
-                              <strong><span class="product-Price-amount amount"><bdi><span class="product-Price-currencySymbol">{{ config('cart.currency_symbol') }}</span>{{ $total }}</bdi></span></strong>
-                            </td>
-                          </tr>
+                            <tr class="order-total">
+                              <td class="text-right" colspan="2" class="pr-4">
+                                <strong>Total</strong>
+                              </td>
+                              <td class="text-right" colspan="2" class="font-weight-bold">
+                                <strong><span class="product-Price-amount amount"><bdi><span class="product-Price-currencySymbol">{{ config('cart.currency_symbol') }}</span>{{ $total }}</bdi></span></strong>
+                              </td>
+                            </tr>
 
-                          <tr>
-                            <td colspan="3" align="right">
-                              <span class="back-to-cart float-right">
-                                <a href="{{ route('cart.list') }}">← back to Cart</a>
-                              </span>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+                            <tr>
+                              <td colspan="3" align="right">
+                                <span class="back-to-cart float-right">
+                                  <a href="{{ route('cart.list') }}">← back to Cart</a>
+                                </span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <!-- end -->
                     </div>
-                    <!-- end -->
                   </div>
-                </div>
-                <!-- end -->
-                <!-- //tip -->
-                <!-- <h5>Tip for US</h5>
+                  <!-- end -->
+                  <!-- //tip -->
+                  <!-- <h5>Tip for US</h5>
                                     <div id="tips">
                                         <div class="row">
                                             <div class="col-4 pr-0 pl-4">
@@ -225,8 +227,8 @@
                                             </div>
                                         </div>
                                     </div> -->
-                <!-- end -->
-                <!-- <div class="row pt-2 pl-2 pr-2" id="custom-tip" style="display: none">
+                  <!-- end -->
+                  <!-- <div class="row pt-2 pl-2 pr-2" id="custom-tip" style="display: none">
                                         <div class="col-12">
                                             <div class="input-group input-group-sm">
                                                 <input type="number" min="1" step="1" class="form-control pt-3 pb-3"
@@ -239,9 +241,9 @@
                                             </div>
                                         </div>
                                     </div> -->
-                <!-- end -->
-                <!-- block-time -->
-                <!-- <div id="checkout-coutndown" class="bg-white p-4 mb-4 mt-3 d-flex">
+                  <!-- end -->
+                  <!-- block-time -->
+                  <!-- <div id="checkout-coutndown" class="bg-white p-4 mb-4 mt-3 d-flex">
                                         <svg style="enable-background:new 0 0 50 50;" version="1.1" viewBox="0 0 50 50"
                                             xml:space="preserve" xmlns="http://www.w3.org/2000/svg" fill="#5e8d03"
                                             width="80px">
@@ -267,13 +269,13 @@
                                             </div>
                                         </div>
                                     </div> -->
-                <!-- end -->
+                  <!-- end -->
+                </div>
               </div>
             </div>
-          </div>
-          <!-- end -->
-          <!-- form-cart -->
-          <!-- <form id="checkout-form" action="/checkout" method="POST"> -->
+            <!-- end -->
+            <!-- form-cart -->
+            <!-- <form id="checkout-form" action="/checkout" method="POST"> -->
             {{ csrf_field() }}
             <div class="col-12 col-md-6 block-form-checkout">
               <div class="col-sm-12 col-lg-9 offset-lg-1">
@@ -291,6 +293,14 @@
                 <div class="form-checkout">
                   <h2 class="fz-25">Payment Infomation</h2>
                   <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                      <select name="bankSwiftCode" id="bankSwiftCode" class="form-control select2" required>
+                        <option value=""></option>
+                        @foreach ($banks as $bank)
+                        <option value="{{ $bank['swift_code'] }}">{{ $bank['name'] }}</option>
+                        @endforeach
+                      </select>
+                    </div>
                     <div class="col-md-12 mb-3">
                       <input type="text" class="form-control" id="bankAccountNumber" name="bankAccountNumber" placeholder="Bank Account Number" required>
                     </div>
@@ -389,9 +399,9 @@
                 </div>
               </div>
             </div>
-          <!-- </form> -->
-          <!-- end -->
-        </div>
+            <!-- </form> -->
+            <!-- end -->
+          </div>
         </form>
       </div>
     </div>
@@ -410,15 +420,39 @@
         <div class="modal-body">
           <form class="modal-otp">
             <div class="form-group">
+              <div class="row mb-3">
+                <div class="col-md-6"><strong>Bank:</strong></div>
+                <div class="col-md-6" id="bankNameDisplay">Vietcombank</div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6"><strong>Bank Account Number:</strong></div>
+                <div class="col-md-6" id="bankAccountNumberDisplay">193821381237</div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6"><strong>Bank Account Name:</strong></div>
+                <div class="col-md-6" id="bankAccountNameDisplay">193821381237</div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6"><strong>Total:</strong></div>
+                <div class="col-md-6" id="totalPriceDisplay">{{ config('cart.currency_symbol') }}</span>{{ $total }}</bdi></span></div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6"><span class="clr-red">*</span> <strong>OTP:</strong></div>
+                <div class="col-md-6">
+                  <input type="number" class="form-control mb-3" id="otpInput" placeholder="" value="" required>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="form-group">
               <label for="validationOtp">Input OTP</label>
 
               <input type="number" class="form-control mb-3" id="otpInput" placeholder="" value="" required>
-              <!-- <span><i>OTP was sent to your phone number</i></span> -->
+              <span><i>OTP was sent to your phone number</i></span>
 
-              <!-- <div class="invalid-feedback">
+              <div class="invalid-feedback">
                 required field.
-              </div> -->
-            </div>
+              </div>
+            </div> -->
           </form>
         </div>
         <div class="modal-footer">
@@ -432,14 +466,16 @@
   <!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
   <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <script src="assets/js/popper.min.js"></script>
   <script src="assets/js/bootstrap.min.js"></script>
   <script src="assets/js/slick.min.js"></script>
   <script src="/assets/js/customs.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </body>
 <script>
   jQuery(document).ready(function($) {
-   $('#checkout-btn').on('click', function(e) {
+    $('#checkout-btn').on('click', function(e) {
       var isValid = $('#checkout-form').valid()
 
       if (!isValid) {
@@ -447,30 +483,45 @@
         return
       }
       $('#ModalOpt').modal('show')
+
+      // append Data
+      $('#bankNameDisplay').html($('#bankSwiftCode').find('option:selected').text())
+      $('#bankAccountNumberDisplay').html($('#bankAccountNumber').val())
+      $('#bankAccountNameDisplay').html($('#bankAccountName').val())
+
+
       // $('#checkout-form').submit()
 
-   /*    const email = $('#email').val()
-      const phoneNumber = $('#phoneNumber').val()
-      const sendOtpUrl = "{{ route('checkout.otp.send') }}"
-      $.ajax({
-        url: sendOtpUrl,
-        type: 'GET',
-        data: {
-          email,
-          phoneNumber
-        },
-        dataType: 'json',
-        success: function(data) {
-          $('#ModalOpt').modal('show')
-        },
-        error: function(xhr, status, error) {
-          console.error('AJAX request failed: ' + status + ', ' + error)
-        }
-      }); */
+      /*    const email = $('#email').val()
+         const phoneNumber = $('#phoneNumber').val()
+         const sendOtpUrl = "{{ route('checkout.otp.send') }}"
+         $.ajax({
+           url: sendOtpUrl,
+           type: 'GET',
+           data: {
+             email,
+             phoneNumber
+           },
+           dataType: 'json',
+           success: function(data) {
+             $('#ModalOpt').modal('show')
+           },
+           error: function(xhr, status, error) {
+             console.error('AJAX request failed: ' + status + ', ' + error)
+           }
+         }); */
     })
 
-     $('#otp-submit').on('click', function() {
+    $('#otp-submit').on('click', function() {
       $(this).attr('disabled', true)
+      const otp = $('#otpInput').val()
+
+      if (!otp || otp == '') {
+        alert("OTP is required")
+        $(this).attr('disabled', false)
+        return
+      }
+
       $('#otp').val($('#otpInput').val())
       $('#checkout-form').submit()
       /* const email = $('#email').val()
@@ -496,6 +547,19 @@
     })
 
     $('#expiredDate').datepicker()
+    $('.select2').select2({
+      placeholder: 'Select bank'
+    });
+
+    @if($errors->all())
+      @foreach($errors->all() as $message)
+        toastr.error("{{ session()->get('error') }}", 'Error!', )
+      @endforeach
+    @elseif(session()->has('message'))
+      toastr.success("{{ session()->get('message') }}", 'Successful!')
+    @elseif(session()->has('error'))
+      toastr.error("{{ session()->get('error') }}", 'Error!')
+    @endif
   })
 </script>
 

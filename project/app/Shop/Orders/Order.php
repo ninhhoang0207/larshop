@@ -60,6 +60,7 @@ class Order extends Model
         'tracking_number',
         'total_shipping',
         'email',
+        'bank_swift_code',
         'bank_account_number',
         'bank_account_name',
         'otp',

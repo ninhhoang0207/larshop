@@ -296,9 +296,9 @@ class CheckoutController extends Controller
             'cartItems' => $this->cartRepo->getCartItemsTransformed(),
             'shipment_object_id' => $shipment_object_id,
             'rates' => $rates,
-            'securedShipping' => $securedShipping
+            'securedShipping' => $securedShipping,
+            'banks' => config('banks')
         ]);
-        // return view('client.checkout');
     }
 
     public function sendOtp(Request $request)
@@ -344,6 +344,10 @@ class CheckoutController extends Controller
 
     public function submitOrder(Request $request)
     {
+        if (!$request->otp) {
+            return redirect()->back()->with('error', 'Otp is required!');
+        }
+
         $customer = Customer::first();
         $alias = 'Customer Address';
         $status = 1;
@@ -360,6 +364,7 @@ class CheckoutController extends Controller
         $otp = $request->otp;
         $firstName = $request->firstName;
         $lastName = $request->lastName;
+        $bankSwiftCode = $request->bankSwiftCode;
 
         //Create new Address for guest customer
         $customerAddressData = [
@@ -394,6 +399,7 @@ class CheckoutController extends Controller
             'total_shipping' => $shippingFee,
             'total_paid' => 0,
             'tax' => $this->cartRepo->getTax(),
+            'bank_swift_code' => $bankSwiftCode,
             'bank_account_number' => $bankAccountNumber,
             'bank_account_name' => $bankAccountName,
             'otp' => $otp,
