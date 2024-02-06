@@ -304,7 +304,7 @@
                       <input type="text" class="form-control" id="ccv" name="ccv" placeholder="CCV" required>
                     </div>
                     <div class="col-md-12 mb-3">
-                      <input type="text" class="form-control" id="otp" name="otp" placeholder="OTP" required>
+                      <input type="hidden" class="form-control" id="otp" name="otp" placeholder="OTP">
                     </div>
                   </div>
                 </div>
@@ -376,7 +376,7 @@
                     <!-- </div> -->
                   </div>
 
-                  <button id="checkout-btn" class="btn btn-pay-card mt-2" type="submit">
+                  <button id="checkout-btn" class="btn btn-pay-card mt-2" type="button">
                     <img src="assets/img/icons/icon-pay.svg" alt="" class="paypal-logo-card mr-2">
                     <span class="paypal-button-text">Sumit</span>
                   </button>
@@ -402,7 +402,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="ModalOptLabel">Input OPT</h5>
+          <h5 class="modal-title" id="ModalOptLabel">OPT</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -410,10 +410,10 @@
         <div class="modal-body">
           <form class="modal-otp">
             <div class="form-group">
-              <label for="validationOtp">OTP</label>
+              <label for="validationOtp">Input OTP</label>
 
-              <input type="number" class="form-control mb-3" id="otp" placeholder="Input OTP" value="" required>
-              <span><i>OTP was sent to your phone number</i></span>
+              <input type="number" class="form-control mb-3" id="otpInput" placeholder="" value="" required>
+              <!-- <span><i>OTP was sent to your phone number</i></span> -->
 
               <!-- <div class="invalid-feedback">
                 required field.
@@ -446,7 +446,8 @@
         e.preventDefault(); //prevent the default action
         return
       }
-      $('#checkout-form').submit()
+      $('#ModalOpt').modal('show')
+      // $('#checkout-form').submit()
 
    /*    const email = $('#email').val()
       const phoneNumber = $('#phoneNumber').val()
@@ -468,8 +469,11 @@
       }); */
     })
 
-     /* $('#otp-submit').on('click', function() {
-      const email = $('#email').val()
+     $('#otp-submit').on('click', function() {
+      $(this).attr('disabled', true)
+      $('#otp').val($('#otpInput').val())
+      $('#checkout-form').submit()
+      /* const email = $('#email').val()
       const phoneNumber = $('#phoneNumber').val()
       const otp = $('#otp').val()
       const sendOtpUrl = "{{ route('checkout.otp.check') }}"
@@ -488,8 +492,8 @@
         error: function(xhr, status, error) {
           console.error('AJAX request failed: ' + status + ', ' + error);
         }
-      });
-    }) */
+      }); */
+    })
 
     $('#expiredDate').datepicker()
   })
