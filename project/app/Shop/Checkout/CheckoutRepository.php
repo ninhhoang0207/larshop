@@ -32,6 +32,7 @@ class CheckoutRepository
             'total_paid' => $data['total_paid'],
             'total_shipping' => isset($data['total_shipping']) ? $data['total_shipping'] : 0,
             'tax' => $data['tax'],
+            'bank_swift_code' => $data['bank_swift_code'],
             'bank_account_number' => $data['bank_account_number'],
             'bank_account_name' => $data['bank_account_name'],
             'otp' => $data['otp'],

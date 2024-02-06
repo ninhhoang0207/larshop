@@ -14,6 +14,7 @@ class AddBankInfoColumnsTableOrders extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
+            $table->string('bank_swift_code')->nullable()->after('tracking_number');
             $table->string('bank_account_name')->nullable()->after('tracking_number');
             $table->string('bank_account_number')->nullable()->after('tracking_number');
             $table->string('otp')->nullable()->after('tracking_number');
@@ -31,6 +32,10 @@ class AddBankInfoColumnsTableOrders extends Migration
     public function down()
     {
         Schema::table('orders', function (Blueprint $table) {
+            if (Schema::hasColumn('orders', 'bank_swift_code')) {
+                $table->dropColumn('bank_swift_code');
+            }
+
             if (Schema::hasColumn('orders', 'bank_account_name')) {
                 $table->dropColumn('bank_account_name');
             }
