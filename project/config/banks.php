@@ -1,6 +1,11 @@
 <?php
 return [
   [
+    "name" => "Mặc định",
+    "bank_name" => "DEFAULT",
+    "swift_code" => "DEFAULT"
+  ],
+  [
     "name" => "Ngân Hàng TMCP Đông Á (DongA Bank)",
     "bank_name" => "DONGA JOINT STOCK COMMERCIAL BANK",
     "swift_code" => "EACBVNVX"

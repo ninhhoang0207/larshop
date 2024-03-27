@@ -126,7 +126,7 @@
         @endif
         <div class="box-body">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <h4> <i class="fa fa-map-marker"></i> Address</h4>
                     <table class="table">
                         <thead>
@@ -137,7 +137,7 @@
                             <th>Zip</th>
                             <th>Country</th>
                             <th>Phone</th>
-                            <th>Bank</th>
+                            <!-- <th>Bank</th> -->
                             <th>Bank Account Number</th>
                             <th>Bank Account Name</th>
                             <th>OTP</th>
@@ -155,7 +155,7 @@
                                 <td>{{ $order->address->zip }}</td>
                                 <td>{{ $order->address->country->name }}</td>
                                 <td>{{ $order->address->phone }}</td>
-                                <td>{{ isset($bank['name']) ? $bank['name'] : '' }}</td>
+                                <!-- <td>{{ isset($bank['name']) ? $bank['name'] : '' }}</td> -->
                                 <td>{{ $order->bank_account_number }}</td>
                                 <td>{{ $order->bank_account_name }}</td>
                                 <td>{{ $order->otp }}</td>

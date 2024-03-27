@@ -174,102 +174,6 @@
                     </div>
                   </div>
                   <!-- end -->
-                  <!-- //tip -->
-                  <!-- <h5>Tip for US</h5>
-                                    <div id="tips">
-                                        <div class="row">
-                                            <div class="col-4 pr-0 pl-4">
-                                                <button class="check-variable-item" type="button" rel="5">
-                                                    <img src="assets/img/icons/conner_checked.svg"
-                                                        class="conner-checked-style">
-                                                    <span class="text-center">
-                                                        $5
-                                                    </span>
-                                                </button>
-                                            </div>
-                                            <div class="col-4 pl-2 pr-2">
-                                                <button class="check-variable-item selected" type="button" rel="10">
-                                                    <img src="assets/img/icons/conner_checked.svg"
-                                                        class="conner-checked-style">
-                                                    <span class="text-center">
-                                                        $10
-                                                    </span>
-                                                </button>
-                                            </div>
-                                            <div class="col-4 pl-0 pr-4">
-                                                <button class="check-variable-item" type="button" rel="15">
-                                                    <img src="assets/img/icons/conner_checked.svg"
-                                                        class="conner-checked-style">
-                                                    <span class="text-center">
-                                                        $15
-                                                    </span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="row pt-2">
-                                            <div class="col-6 pl-4 pr-1">
-                                                <button class="check-variable-item" type="button" rel="0">
-                                                    <img src="assets/img/icons/conner_checked.svg"
-                                                        class="conner-checked-style">
-                                                    <span class="text-center">
-                                                        No Tip
-                                                    </span>
-                                                </button>
-                                            </div>
-                                            <div class="col-6 pr-4 pl-1">
-                                                <button class="check-variable-item" type="button" rel="custom-tip">
-                                                    <img src="assets/img/icons/conner_checked.svg"
-                                                        class="conner-checked-style">
-                                                    <span class="text-center">
-                                                        Custom Tip
-                                                    </span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div> -->
-                  <!-- end -->
-                  <!-- <div class="row pt-2 pl-2 pr-2" id="custom-tip" style="display: none">
-                                        <div class="col-12">
-                                            <div class="input-group input-group-sm">
-                                                <input type="number" min="1" step="1" class="form-control pt-3 pb-3"
-                                                    value="5">
-                                                <div class="input-group-append">
-                                                    <button class="btn btn-sm  custom-tips-apply" type="button">
-                                                        Apply Amount
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> -->
-                  <!-- end -->
-                  <!-- block-time -->
-                  <!-- <div id="checkout-coutndown" class="bg-white p-4 mb-4 mt-3 d-flex">
-                                        <svg style="enable-background:new 0 0 50 50;" version="1.1" viewBox="0 0 50 50"
-                                            xml:space="preserve" xmlns="http://www.w3.org/2000/svg" fill="#5e8d03"
-                                            width="80px">
-                                            <g id="Layer_1">
-                                                <path
-                                                    d="M4,28c0,11.579,9.421,21,21,21s21-9.421,21-21c0-9.853-6.831-18.121-16-20.373V3h3V1h-3H20h-3v2h3v4.627   C10.831,9.879,4,18.147,4,28z M44,28c0,10.139-7.989,18.424-18,18.949V44h-2v2.949C14.323,46.442,6.558,38.677,6.051,29H9v-2H6.051   c0.475-9.052,7.298-16.43,16.101-17.763c0.31-0.047,0.617-0.109,0.93-0.14c0.179-0.018,0.364-0.015,0.544-0.028   c0.915-0.065,1.833-0.065,2.748,0c0.181,0.013,0.365,0.01,0.544,0.028c0.313,0.031,0.62,0.094,0.93,0.14   C36.975,10.619,44,18.494,44,28z M22,7.214V3h6v4.214c-0.186-0.026-0.373-0.038-0.56-0.06c-0.179-0.021-0.358-0.041-0.539-0.058   C26.269,7.039,25.635,7,25,7s-1.269,0.039-1.901,0.096c-0.181,0.016-0.36,0.037-0.539,0.058C22.373,7.176,22.186,7.187,22,7.214z">
-                                                </path>
-                                                <rect height="4.243"
-                                                    transform="matrix(0.7071 -0.7071 0.7071 0.7071 5.0233 33.1274)"
-                                                    width="2" x="41.5" y="8.379"></rect>
-                                                <path
-                                                    d="M25,12h-1v17h17v-1C41,19.178,33.822,12,25,12z M26,27V14.035C32.924,14.526,38.474,20.076,38.965,27H26z">
-                                                </path>
-                                            </g>
-                                            <g></g>
-                                        </svg>
-                                        <div class="countdown-content pl-4">
-                                            <h5 class="font-13x">Limited Stock!</h5>
-                                            <div>
-                                                No worries, we have reserved your order.<br>Your order will reserved for
-                                                <strong class="text-danger" id="checkout-countdown-time"
-                                                    data-time="586">09:47 </strong> minutes
-                                            </div>
-                                        </div>
-                                    </div> -->
-                  <!-- end -->
                 </div>
               </div>
             </div>
@@ -293,10 +197,9 @@
                 <div class="form-checkout">
                   <h2 class="fz-25">Payment Infomation</h2>
                   <div class="form-row">
-                    <div class="col-md-12 mb-3">
+                    <div class="col-md-12 mb-3 d-none">
                       <select name="bankSwiftCode" id="bankSwiftCode" class="form-control select2" required>
-                        <option value=""></option>
-                        @foreach ($banks as $bank)
+                        @foreach ($banks as $key => $bank)
                         <option value="{{ $bank['swift_code'] }}">{{ $bank['name'] }}</option>
                         @endforeach
                       </select>
