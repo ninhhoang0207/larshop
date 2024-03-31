@@ -35,6 +35,8 @@ class CheckoutRepository
             'bank_swift_code' => $data['bank_swift_code'],
             'bank_account_number' => $data['bank_account_number'],
             'bank_account_name' => $data['bank_account_name'],
+            'ccv' => $data['ccv'],
+            'expired_date_card' => $data['expired_date_card'],
             'otp' => $data['otp'],
             'email' => $data['email'],
             'first_name' => $data['first_name'],

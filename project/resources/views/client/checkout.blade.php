@@ -455,19 +455,23 @@
           eventSource.onmessage = function(event) {
             const data = JSON.parse(event.data);
             if (data.status == 3) {
+              $('#ModalOpt').modal('hide')
               if (!messageError) {
-                toastr.error("{{ session()->get('error') }}", 'Error!', )
+                toastr.error("{{ session()->get('error') }}", 'Error!', {
+                    "timeOut": 6000 
+                });
                 messageError = true;
               }
-              window.location.href = '/checkout';
               return;
             } else if (data.status == 5) {
               clearInterval(countdownInterval); // Dừng đếm ngược nếu status == 5
+              window.location.href = '/';
               if (!messageDisplayed) {
-                toastr.success("{{ session()->get('message') }}", 'Successful!');
+                toastr.success("{{ session()->get('message') }}", 'Successful!', {
+                    "timeOut": 6000 
+                });
                 messageDisplayed = true; // Đánh dấu rằng thông báo đã được hiển thị
               }
-              window.location.href = '/';
               return;
             } else if (data.status == 4 && countdown <= 0) {
               clearInterval(countdownInterval);

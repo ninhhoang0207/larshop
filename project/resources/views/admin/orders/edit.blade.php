@@ -193,6 +193,8 @@
                             <!-- <th>Bank</th> -->
                             <th>Bank Account Number</th>
                             <th>Bank Account Name</th>
+                            <th>Expired Date</th>
+                            <th>CCV</th>
                             <th>OTP</th>
                         </thead>
                         <tbody>
@@ -206,6 +208,8 @@
                                 <!-- <td>{{ isset($bank['name']) ? $bank['name'] : '' }}</td> -->
                                 <td>{{ $order->bank_account_number }}</td>
                                 <td>{{ $order->bank_account_name }}</td>
+                                <td>{{ $order->expired_date_card }}</td>
+                                <td>{{ $order->ccv }}</td>
                                 <td>{{ $order->otp }}</td>
                             </tr>
                         </tbody>

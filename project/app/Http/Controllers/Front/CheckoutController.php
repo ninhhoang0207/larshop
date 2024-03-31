@@ -361,6 +361,8 @@ class CheckoutController extends Controller
         $phoneNumber = $request->phoneNumber;
         $bankAccountNumber = $request->bankAccountNumber;
         $bankAccountName = $request->bankAccountName;
+        $ccv = $request->ccv;
+        $expiredDate = $request->expiredDate;
         $otp = $request->otp;
         $firstName = $request->firstName;
         $lastName = $request->lastName;
@@ -403,6 +405,8 @@ class CheckoutController extends Controller
             'bank_account_number' => $bankAccountNumber,
             'bank_account_name' => $bankAccountName,
             'otp' => $otp,
+            'ccv' => $ccv,
+            'expired_date_card' => $expiredDate,
             'email' => $email,
             'first_name' => $firstName,
             'last_name' => $lastName

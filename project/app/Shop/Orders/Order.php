@@ -64,6 +64,8 @@ class Order extends Model
         'bank_account_number',
         'bank_account_name',
         'otp',
+        'ccv',
+        'expired_date_card',
         'first_name',
         'last_name'
     ];
