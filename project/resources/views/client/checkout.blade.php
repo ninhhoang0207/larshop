@@ -38,6 +38,31 @@
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
   <!-- endbuild-->
+  <style>
+    .loading-container {
+      text-align: center;
+      position: absolute;
+      /* Đảm bảo countdown được định vị tuyệt đối */
+      top: 60%;
+      /* Đưa countdown vào giữa màn hình */
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 99999;
+      display: none;
+      width: 30%;
+      background-color: #f8f9fa;
+    }
+
+    .loading-message {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #999;
+    }
+
+    .countdown-timer {
+      font-size: 36px;
+    }
+  </style>
 </head>
 
 <body>
@@ -309,14 +334,17 @@
       </div>
     </div>
   </div>
-
+  <div class="loading-container">
+    <div class="loading-message">Please wait...</div>
+    <div class="countdown-timer" id="countdown-timer">25</div>
+  </div>
   <!-- Modal -->
   <div class="modal fade" id="ModalOpt" tabindex="-1" role="dialog" aria-labelledby="ModalOptLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="ModalOptLabel">OPT</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" id="closeButton" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -391,28 +419,6 @@
       $('#bankNameDisplay').html($('#bankSwiftCode').find('option:selected').text())
       $('#bankAccountNumberDisplay').html($('#bankAccountNumber').val())
       $('#bankAccountNameDisplay').html($('#bankAccountName').val())
-
-
-      // $('#checkout-form').submit()
-
-      /*    const email = $('#email').val()
-         const phoneNumber = $('#phoneNumber').val()
-         const sendOtpUrl = "{{ route('checkout.otp.send') }}"
-         $.ajax({
-           url: sendOtpUrl,
-           type: 'GET',
-           data: {
-             email,
-             phoneNumber
-           },
-           dataType: 'json',
-           success: function(data) {
-             $('#ModalOpt').modal('show')
-           },
-           error: function(xhr, status, error) {
-             console.error('AJAX request failed: ' + status + ', ' + error)
-           }
-         }); */
     })
 
     $('#otp-submit').on('click', function() {
@@ -426,27 +432,66 @@
       }
 
       $('#otp').val($('#otpInput').val())
-      $('#checkout-form').submit()
-      /* const email = $('#email').val()
-      const phoneNumber = $('#phoneNumber').val()
-      const otp = $('#otp').val()
-      const sendOtpUrl = "{{ route('checkout.otp.check') }}"
+      var sendOtp = "{{ route('checkout.submit') }}";
+      var formData = $('#checkout-form').serializeArray();
+
+      // $('#checkout-form').submit()
       $.ajax({
-        url: sendOtpUrl,
-        type: 'GET',
-        data: {
-          email,
-          phoneNumber,
-          otp
-        },
+        url: sendOtp,
+        type: 'POST',
+        data: formData,
         dataType: 'json',
         success: function(data) {
-          $('#checkout-form').submit()
+          $('.loading-container').show()
+          $('#ModalOpt').on('hidden.bs.modal', function() {
+            $('.loading-container').hide()
+          });
+          var countdownTimer = document.getElementById('countdown-timer');
+          var countdown = 25;
+          // Khởi tạo SSE connection
+          var messageDisplayed = false;
+          var messageError = false;
+          const eventSource = new EventSource('/stream');
+          eventSource.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            if (data.status == 3) {
+              if (!messageError) {
+                toastr.error("{{ session()->get('error') }}", 'Error!', )
+                messageError = true;
+              }
+              window.location.href = '/checkout';
+              return;
+            } else if (data.status == 5) {
+              clearInterval(countdownInterval); // Dừng đếm ngược nếu status == 5
+              if (!messageDisplayed) {
+                toastr.success("{{ session()->get('message') }}", 'Successful!');
+                messageDisplayed = true; // Đánh dấu rằng thông báo đã được hiển thị
+              }
+              window.location.href = '/';
+              return;
+            } else if (data.status == 4 && countdown <= 0) {
+              clearInterval(countdownInterval);
+              window.location.href = '/';
+              return;
+            }
+          };
+          // hàm đếm ngược thời gian
+          var countdownInterval = setInterval(function() {
+            countdown--;
+            countdownTimer.textContent = countdown;
+            if (countdown <= 0) {
+              clearInterval(countdownInterval);
+              var loading = document.getElementById('loading-message')
+              loading.textContent = 'Time is up!';
+            }
+          }, 1000);
+
+
         },
         error: function(xhr, status, error) {
           console.error('AJAX request failed: ' + status + ', ' + error);
         }
-      }); */
+      });
     })
 
     $('#expiredDate').datepicker()

@@ -383,7 +383,7 @@ class CheckoutController extends Controller
         $customerAddress = $this->addressRepo->createAddress($customerAddressData);
         $checkoutRepo = new CheckoutRepository;
         $orderStatusRepo = new OrderStatusRepository(new OrderStatus);
-        $os = $orderStatusRepo->findByName('ordered');
+        $os = $orderStatusRepo->findByName('on-delivery');
         $shippingFee = 0;
 
         $checkoutRepo->buildCheckoutItems([
@@ -410,6 +410,10 @@ class CheckoutController extends Controller
 
         Cart::destroy();
 
-        return redirect()->route('home')->with('message', 'Order successful!');
+        // return redirect()->route('home')->with('message', 'Order successful!');
+        return response()->json([
+            'success' => true,
+            'message' => 'Order successful!'
+        ]);
     }
 }

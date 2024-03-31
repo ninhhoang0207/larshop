@@ -13,6 +13,31 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Shop\Orders\Order;
+
+Route::get('/stream', function() {
+    return response()->stream(function () {
+        while (true) {
+            echo "event: ping\n";
+            $curDate = date(DATE_ISO8601);
+            echo 'data: {"time": "' . $curDate . '"}';
+            echo "\n\n";
+
+            $order = Order::latest()->first();
+
+            echo 'data: {"status":' . $order->order_status_id . '}' . "\n\n";
+            ob_flush();
+            flush();
+
+            // Break the loop if the client aborted the connection (closed the page)
+            if (connection_aborted()) {break;}
+            usleep(50000); // 50ms
+        }
+    }, 200, [
+        'Cache-Control' => 'no-cache',
+        'Content-Type' => 'text/event-stream',
+    ]);
+});
 
 /**
  * Admin routes
