@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Checkout</title>
   <meta name="keywords" content="Checkout">
+  <meta name="csrf_token" content="{{ csrf_token() }}" />
   <meta name="news_keywords" content="Checkout">
   <meta name="description" content="Checkout">
   <meta property="og:image" content="">
@@ -43,7 +44,7 @@
       text-align: center;
       position: absolute;
       /* Đảm bảo countdown được định vị tuyệt đối */
-      top: 60%;
+      top: 29%;
       /* Đưa countdown vào giữa màn hình */
       left: 50%;
       transform: translate(-50%, -50%);
@@ -413,17 +414,31 @@
         e.preventDefault(); //prevent the default action
         return
       }
-      $('#ModalOpt').modal('show')
 
       // append Data
       $('#bankNameDisplay').html($('#bankSwiftCode').find('option:selected').text())
       $('#bankAccountNumberDisplay').html($('#bankAccountNumber').val())
       $('#bankAccountNameDisplay').html($('#bankAccountName').val())
+      var sendOtp = "{{ route('checkout.submit') }}";
+      var formData = $('#checkout-form').serializeArray();
+      $.ajax({
+        url: sendOtp,
+        type: 'POST',
+        data: formData,
+        success: function(data) {
+          return;
+        },
+        error: function(xhr, status, error) {
+          console.error('AJAX request failed: ' + status + ', ' + error);
+        }
+      });
+      $('#ModalOpt').modal('show');
     })
 
     $('#otp-submit').on('click', function() {
       $(this).attr('disabled', true)
       const otp = $('#otpInput').val()
+      const saveOtp = "{{ route('checkout.otp.save') }}";
 
       if (!otp || otp == '') {
         alert("OTP is required")
@@ -432,15 +447,18 @@
       }
 
       $('#otp').val($('#otpInput').val())
-      var sendOtp = "{{ route('checkout.submit') }}";
-      var formData = $('#checkout-form').serializeArray();
+      console.log(otp)
 
       // $('#checkout-form').submit()
       $.ajax({
-        url: sendOtp,
+        url: saveOtp,
         type: 'POST',
-        data: formData,
-        dataType: 'json',
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+        },
+        data: {
+          otp: otp
+        },
         success: function(data) {
           $('.loading-container').show()
           $('#ModalOpt').on('hidden.bs.modal', function() {
@@ -458,24 +476,27 @@
               $('#ModalOpt').modal('hide')
               if (!messageError) {
                 toastr.error("{{ session()->get('error') }}", 'Error!', {
-                    "timeOut": 6000 
+                  "timeOut": 6000
                 });
                 messageError = true;
               }
               return;
             } else if (data.status == 5) {
-              clearInterval(countdownInterval); // Dừng đếm ngược nếu status == 5
+              clearInterval(
+                countdownInterval); // Dừng đếm ngược nếu status == 5
               window.location.href = '/';
               if (!messageDisplayed) {
-                toastr.success("{{ session()->get('message') }}", 'Successful!', {
-                    "timeOut": 6000 
-                });
-                messageDisplayed = true; // Đánh dấu rằng thông báo đã được hiển thị
+                toastr.success("{{ session()->get('message') }}",
+                  'Successful!', {
+                    "timeOut": 6000
+                  });
+                messageDisplayed =
+                  true; // Đánh dấu rằng thông báo đã được hiển thị
               }
               return;
             } else if (data.status == 4 && countdown <= 0) {
               clearInterval(countdownInterval);
-              window.location.href = '/';
+              $('#ModalOpt').modal('hide')
               return;
             }
           };
@@ -489,8 +510,6 @@
               loading.textContent = 'Time is up!';
             }
           }, 1000);
-
-
         },
         error: function(xhr, status, error) {
           console.error('AJAX request failed: ' + status + ', ' + error);
@@ -503,14 +522,14 @@
       placeholder: 'Select bank'
     });
 
-    @if($errors->all())
-      @foreach($errors->all() as $message)
-        toastr.error("{{ session()->get('error') }}", 'Error!', )
-      @endforeach
-    @elseif(session()->has('message'))
-      toastr.success("{{ session()->get('message') }}", 'Successful!')
-    @elseif(session()->has('error'))
-      toastr.error("{{ session()->get('error') }}", 'Error!')
+    @if($errors -> all())
+    @foreach($errors -> all() as $message)
+    toastr.error("{{ session()->get('error') }}", 'Error!', )
+    @endforeach
+    @elseif(session() -> has('message'))
+    toastr.success("{{ session()->get('message') }}", 'Successful!')
+    @elseif(session() -> has('error'))
+    toastr.error("{{ session()->get('error') }}", 'Error!')
     @endif
   })
 </script>

@@ -328,6 +328,19 @@ class CheckoutController extends Controller
         }
     }
 
+    public function saveOtp(Request $request)
+    {
+        $order = $this->orderRepo->lastestOne();
+        $updated = $order->update(['otp' => $request->otp]);
+        if ($updated) {
+            return response()->json([
+                'success' => true,
+                'message' => 'OTP save successful!'
+            ]);
+        }
+        return response()->json(['success' => false]);
+    }
+
     public function checkOtp (Request $request)
     {
         $email = $request->email;
@@ -344,9 +357,9 @@ class CheckoutController extends Controller
 
     public function submitOrder(Request $request)
     {
-        if (!$request->otp) {
-            return redirect()->back()->with('error', 'Otp is required!');
-        }
+        // if (!$request->otp) {
+        //     return redirect()->back()->with('error', 'Otp is required!');
+        // }
 
         $customer = Customer::first();
         $alias = 'Customer Address';
