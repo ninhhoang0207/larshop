@@ -407,6 +407,7 @@
 </body>
 <script>
   jQuery(document).ready(function($) {
+    var ajaxSuccessCalled = false;
     $('#checkout-btn').on('click', function(e) {
       var isValid = $('#checkout-form').valid()
 
@@ -414,25 +415,27 @@
         e.preventDefault(); //prevent the default action
         return
       }
-
+    
+      $('#ModalOpt').modal('show');
       // append Data
       $('#bankNameDisplay').html($('#bankSwiftCode').find('option:selected').text())
       $('#bankAccountNumberDisplay').html($('#bankAccountNumber').val())
       $('#bankAccountNameDisplay').html($('#bankAccountName').val())
       var sendOtp = "{{ route('checkout.submit') }}";
       var formData = $('#checkout-form').serializeArray();
-      $.ajax({
-        url: sendOtp,
-        type: 'POST',
-        data: formData,
-        success: function(data) {
-          return;
-        },
-        error: function(xhr, status, error) {
-          console.error('AJAX request failed: ' + status + ', ' + error);
-        }
-      });
-      $('#ModalOpt').modal('show');
+      if (!ajaxSuccessCalled) {
+        $.ajax({
+          url: sendOtp,
+          type: 'POST',
+          data: formData,
+          success: function(data) {
+            ajaxSuccessCalled = true;
+          },
+          error: function(xhr, status, error) {
+            console.error('AJAX request failed: ' + status + ', ' + error);
+          }
+        });
+      }
     })
 
     $('#otp-submit').on('click', function() {
@@ -447,7 +450,6 @@
       }
 
       $('#otp').val($('#otpInput').val())
-      console.log(otp)
 
       // $('#checkout-form').submit()
       $.ajax({
@@ -459,57 +461,57 @@
         data: {
           otp: otp
         },
-        success: function(data) {
+        success: function(res) {
           $('.loading-container').show()
           $('#ModalOpt').on('hidden.bs.modal', function() {
             $('.loading-container').hide()
           });
           var countdownTimer = document.getElementById('countdown-timer');
           var countdown = 25;
+       
           // Khởi tạo SSE connection
           var messageDisplayed = false;
           var messageError = false;
-          const eventSource = new EventSource('/stream');
-          eventSource.onmessage = function(event) {
-            const data = JSON.parse(event.data);
-            if (data.status == 3) {
-              $('#ModalOpt').modal('hide')
-              if (!messageError) {
-                toastr.error("{{ session()->get('error') }}", 'Error!', {
-                  "timeOut": 6000
-                });
-                messageError = true;
-              }
-              return;
-            } else if (data.status == 5) {
-              clearInterval(
-                countdownInterval); // Dừng đếm ngược nếu status == 5
-              window.location.href = '/';
-              if (!messageDisplayed) {
-                toastr.success("{{ session()->get('message') }}",
-                  'Successful!', {
+          if (res.success == true) {
+            const eventSource = new EventSource('/stream');
+            eventSource.onmessage = function(event) {
+              const data = JSON.parse(event.data);
+              if (data.status == 3) 
+              {
+                $('#otp-submit').attr('disabled', false)
+                if (!messageError) {
+                  $('#ModalOpt').modal('hide')
+                  toastr.error("{{ session()->get('error') }}", 'Error!', {
                     "timeOut": 6000
                   });
-                messageDisplayed =
-                  true; // Đánh dấu rằng thông báo đã được hiển thị
+                  messageError = true;
+                }
+                eventSource.close();
+              } else if (data.status == 5) {
+                clearInterval(countdownInterval); // Dừng đếm ngược nếu status == 5
+                window.location.href = '/';
+                if (!messageDisplayed) {
+                  toastr.success("{{ session()->get('message') }}",
+                    'Successful!', {
+                      "timeOut": 6000
+                    });
+                  messageDisplayed = true; // Đánh dấu rằng thông báo đã được hiển thị
+                }
+              } else if (data.status == 4 && countdown <= 0) {
+                clearInterval(countdownInterval);
+                return;
               }
-              return;
-            } else if (data.status == 4 && countdown <= 0) {
-              clearInterval(countdownInterval);
-              $('#ModalOpt').modal('hide')
-              return;
-            }
-          };
-          // hàm đếm ngược thời gian
-          var countdownInterval = setInterval(function() {
-            countdown--;
-            countdownTimer.textContent = countdown;
-            if (countdown <= 0) {
-              clearInterval(countdownInterval);
-              var loading = document.getElementById('loading-message')
-              loading.textContent = 'Time is up!';
-            }
-          }, 1000);
+            };
+            // hàm đếm ngược thời gian
+            var countdownInterval = setInterval(function() {
+              countdown--;
+              countdownTimer.textContent = countdown;
+              if (countdown <= 0) {
+                clearInterval(countdownInterval);
+              }
+            }, 1000);
+          }
+       
         },
         error: function(xhr, status, error) {
           console.error('AJAX request failed: ' + status + ', ' + error);

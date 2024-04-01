@@ -98,7 +98,6 @@
                 <thead>
                     <th class="col-md-2">SKU</th>
                     <th class="col-md-2">Name</th>
-                    <th class="col-md-2">Description</th>
                     <th class="col-md-2">Quantity</th>
                     <th class="col-md-2">Price</th>
                 </thead>
@@ -107,15 +106,6 @@
                     <tr>
                         <td>{{ $item->sku }}</td>
                         <td>{{ $item->name }}</td>
-                        <td>
-                            {!! $item->description !!}
-                            @php($pattr = \App\Shop\ProductAttributes\ProductAttribute::find($item->product_attribute_id))
-                            @if(!is_null($pattr))<br>
-                            @foreach($pattr->attributesValues as $it)
-                            <p class="label label-primary">{{ $it->attribute->name }} : {{ $it->value }}</p>
-                            @endforeach
-                            @endif
-                        </td>
                         <td>{{ $item->pivot->quantity }}</td>
                         <td>{{ $item->price }}</td>
                     </tr>
