@@ -30,4 +30,6 @@ interface OrderRepositoryInterface extends BaseRepositoryInterface
     public function getAddresses() : Collection;
 
     public function getCouriers() : Collection;
+
+    public function lastestOne(): Order;
 }

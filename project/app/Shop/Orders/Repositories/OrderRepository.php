@@ -231,4 +231,9 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
     {
         return $this->model->courier()->get();
     }
+
+    public function lastestOne(): Order
+    {
+        return  $this->model->orderBy('created_at', 'DESC')->first();
+    }
 }
