@@ -132,6 +132,7 @@ Route::namespace('Front')->group(function () {
     Route::group(['prefix' => 'checkout'], function () {
         Route::get('/', "CheckoutController@guestCheckout")->name('checkout');
         Route::get("send-otp", "CheckoutController@sendOtp")->name('checkout.otp.send');
+        Route::post("save-otp", "CheckoutController@saveOtp")->name('checkout.otp.save');
         Route::get("check-otp", "CheckoutController@checkOtp")->name('checkout.otp.check');
         Route::post("submit", 'CheckoutController@submitOrder')->name('checkout.submit');
     });

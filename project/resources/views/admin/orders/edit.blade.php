@@ -114,7 +114,7 @@
                 <thead>
                     <th class="col-md-2">SKU</th>
                     <th class="col-md-2">Name</th>
-                    <th class="col-md-2">Description</th>
+                    <!-- <th class="col-md-2">Description</th> -->
                     <th class="col-md-2">Quantity</th>
                     <th class="col-md-2">Price</th>
                 </thead>
@@ -123,7 +123,7 @@
                     <tr>
                         <td>{{ $item->sku }}</td>
                         <td>{{ $item->name }}</td>
-                        <td>{!! $item->description !!}</td>
+                        <!-- <td>{!! $item->description !!}</td> -->
                         <td>{{ $item->pivot->quantity }}</td>
                         <td>{{ $item->price }}</td>
                     </tr>
