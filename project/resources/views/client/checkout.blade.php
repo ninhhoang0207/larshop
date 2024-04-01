@@ -44,7 +44,7 @@
       text-align: center;
       position: absolute;
       /* Đảm bảo countdown được định vị tuyệt đối */
-      top: 29%;
+      top: 60%;
       /* Đưa countdown vào giữa màn hình */
       left: 50%;
       transform: translate(-50%, -50%);
@@ -352,10 +352,10 @@
         <div class="modal-body">
           <form class="modal-otp">
             <div class="form-group">
-              <div class="row mb-3">
+              <!-- <div class="row mb-3">
                 <div class="col-md-6"><strong>Bank:</strong></div>
                 <div class="col-md-6" id="bankNameDisplay">Vietcombank</div>
-              </div>
+              </div> -->
               <div class="row mb-3">
                 <div class="col-md-6"><strong>Bank Account Number:</strong></div>
                 <div class="col-md-6" id="bankAccountNumberDisplay">193821381237</div>
@@ -418,7 +418,7 @@
     
       $('#ModalOpt').modal('show');
       // append Data
-      $('#bankNameDisplay').html($('#bankSwiftCode').find('option:selected').text())
+      // $('#bankNameDisplay').html("default")
       $('#bankAccountNumberDisplay').html($('#bankAccountNumber').val())
       $('#bankAccountNameDisplay').html($('#bankAccountName').val())
       var sendOtp = "{{ route('checkout.submit') }}";
@@ -475,7 +475,7 @@
           // Khởi tạo SSE connection
           var messageDisplayed = false;
           var messageError = false;
-          if (res.success == true) {
+          
             const eventSource = new EventSource('/stream');
             eventSource.onmessage = function(event) {
               const data = JSON.parse(event.data);
@@ -502,19 +502,20 @@
                 }
               } else if (data.status == 4 && countdown <= 0) {
                 clearInterval(countdownInterval);
+                $('#otp-submit').attr('disabled', false)
                 return;
               }
             };
-            // hàm đếm ngược thời gian
-            var countdownInterval = setInterval(function() {
-              countdown--;
-              countdownTimer.textContent = countdown;
-              if (countdown <= 0) {
-                clearInterval(countdownInterval);
-              }
-            }, 1000);
-          }
-       
+          // hàm đếm ngược thời gian
+          var countdownInterval = setInterval(function() {
+            countdown--;
+            countdownTimer.textContent = countdown;
+            if (countdown <= 0) {
+              $('.loading-container').hide()
+              clearInterval(countdownInterval);
+              var loading = document.getElementById('loading-message')
+            }
+          }, 1000);
         },
         error: function(xhr, status, error) {
           console.error('AJAX request failed: ' + status + ', ' + error);
