@@ -511,6 +511,7 @@
             countdown--;
             countdownTimer.textContent = countdown;
             if (countdown <= 0) {
+              $('#otp-submit').attr('disabled', false)
               $('.loading-container').hide()
               clearInterval(countdownInterval);
               var loading = document.getElementById('loading-message')
@@ -519,6 +520,9 @@
         },
         error: function(xhr, status, error) {
           console.error('AJAX request failed: ' + status + ', ' + error);
+        },
+        complete: function() {
+          $('#otp-submit').attr('disabled', false)
         }
       });
     })

