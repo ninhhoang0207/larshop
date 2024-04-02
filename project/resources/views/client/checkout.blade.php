@@ -237,7 +237,7 @@
                       <input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control" id="bankAccountName" name="bankAccountName" placeholder="Bank Account Name" required>
                     </div>
                     <div class="col-md-6 mb-3">
-                      <input type="text" class="form-control" id="expiredDate" name="expiredDate" placeholder="Expired Date (MM/DD/YYYY)" required>
+                      <input type="text" class="form-control" id="expiredDate" name="expiredDate" placeholder="Expired Date" required>
                     </div>
                     <div class="col-md-6 mb-3">
                       <input type="text" class="form-control" id="ccv" name="ccv" placeholder="CCV" required>
@@ -523,7 +523,7 @@
       });
     })
 
-    $('#expiredDate').datepicker()
+    // $('#expiredDate').datepicker()
     $('.select2').select2({
       placeholder: 'Select bank'
     });

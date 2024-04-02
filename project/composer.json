@@ -15,6 +15,7 @@
         "gloudemans/shoppingcart": "dev-laravel-8",
         "guzzlehttp/guzzle": "^7.0.1",
         "ichtrojan/laravel-otp": "^2.0",
+        "irazasyed/telegram-bot-sdk": "^3.9",
         "iyngaran/sms-gateway": "^1.0",
         "jsdecena/baserepo": "^1.0",
         "jsdecena/mcpro": "1.1.*",

