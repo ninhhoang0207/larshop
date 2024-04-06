@@ -47,6 +47,7 @@
           </div>
           <!-- //title -->
           <h1 class="product_title fz-30 font-bold">{{ $product->name }}</h1>
+          <h3 class="product_title font-bold">{!! $product->content !!}</h3>
           <p class="text-price fz-25"><span class="price"><span class="price-small fz-17 @if ($productAttributeDefault || $product->sale_price) text-line-through @endif" id="price">{{ config('cart.currency_symbol') }}{{ $productAttributeDefault->price ?? $product->price }}</span>
           @if ($productAttributeDefault || $product->sale_price)
           <span class="price-big clr-red" id="sale-price">{{ config('cart.currency_symbol') }}{{ $productAttributeDefault->sale_price ?? $product->sale_price }}</span></span></p>

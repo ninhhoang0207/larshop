@@ -32,6 +32,10 @@
                                                 <input type="text" name="name" id="name" placeholder="Name" class="form-control" value="{!! $product->name !!}">
                                             </div>
                                             <div class="form-group">
+                                                <label for="content">Content </label>
+                                                <textarea class="form-control ckeditor" name="content" id="content" rows="5" placeholder="Content">{!! $product->content  !!}</textarea>
+                                            </div>
+                                            <div class="form-group">
                                                 <label for="description">Description </label>
                                                 <textarea class="form-control ckeditor" name="description" id="description" rows="5" placeholder="Description">{!! $product->description  !!}</textarea>
                                             </div>
@@ -184,6 +188,10 @@
     </style>
 @endsection
 @section('js')
+<script>
+     CKEDITOR.replace('ckeditor');
+     CKEDITOR.config.extraPlugins = 'colorbutton';;
+    </script>
     <script type="text/javascript">
         function backToInfoTab() {
             $('#tablist > li:first-child').addClass('active');
